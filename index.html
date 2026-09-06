@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Linus & Ziara</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
@@ -182,8 +187,18 @@
     display:flex; align-items:center; justify-content:center;
     font-family:'Cormorant Garamond', serif;
     font-weight:600;
-    letter-spacing:.03em;
+    font-style:italic;
+    letter-spacing:.06em;
     color:#fbeee9;
+  }
+  .seal-mark .amp{
+    font-family:'Parisienne', cursive;
+    font-style:normal;
+    font-weight:400;
+    font-size:1.35em;
+    margin:0 1px;
+    position:relative;
+    top:0.06em;
   }
   .seal{
     position:absolute;
@@ -475,6 +490,9 @@
   }
   .replay:hover{border-bottom-color:var(--wine-rose);}
 </style>
+</head>
+<body>
+
 
 <div class="stage" id="stage">
   <div class="orb o1"></div>
@@ -495,7 +513,7 @@
         <svg class="edge-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <polygon class="edge-line" points="0,0 100,0 50,90"></polygon>
         </svg>
-        <div class="seal-mark seal">L&amp;Z</div>
+        <div class="seal-mark seal">L<span class="amp">&amp;</span>Z</div>
       </div>
     </div>
     <p class="hint" id="hint">Toca el sobre para abrir</p>
@@ -519,7 +537,7 @@
         </div>
       </div>
 
-      <div class="medallion seal-mark">L&amp;Z</div>
+      <div class="medallion seal-mark">L<span class="amp">&amp;</span>Z</div>
 
       <div class="card-body">
         <p class="lede">Con todo nuestro amor, queremos que seas parte de este día.</p>
@@ -635,3 +653,6 @@
     });
   })();
 </script>
+
+</body>
+</html>
