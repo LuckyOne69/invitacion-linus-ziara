@@ -860,8 +860,8 @@
   <div class="orb o3"></div>
   <div class="envelope-column">
     <div class="halo"></div>
-    <img class="floral-img deco" data-deco="flor-sobre-1" src="assets/flor_wine.png" alt="" style="position:absolute; left:-38px; bottom:-36px; width:150px; transform:translate(0px,0px) rotate(-8deg) scale(1); z-index:0; pointer-events:none;">
-    <img class="floral-img deco" data-deco="flor-sobre-2" src="assets/flor_mixed.png" alt="" style="position:absolute; right:-30px; top:-40px; width:120px; transform:translate(0px,0px) rotate(12deg) scale(1); z-index:0; pointer-events:none;">
+    <img class="floral-img deco" data-deco="flor-sobre-1" src="assets/flor_wine.png" alt="" style="position:absolute; left:-38px; bottom:-36px; width:150px; transform:translate(0px,0px) rotate(-8deg) scale(1); z-index:6; pointer-events:none;">
+    <img class="floral-img deco" data-deco="flor-sobre-2" src="assets/flor_mixed.png" alt="" style="position:absolute; right:-30px; top:-40px; width:120px; transform:translate(0px,0px) rotate(12deg) scale(1); z-index:6; pointer-events:none;">
     <div class="envelope" id="envelope">
       <div class="peek"><span>Para ti</span></div>
       <div class="envelope-liner"></div>
@@ -1143,7 +1143,8 @@
   decoEls.forEach(function(el){
     var id = el.getAttribute('data-deco');
     var p = parseExisting(el);
-    state[id] = { tx:p.tx, ty:p.ty, rotate:p.rotate, scale:p.scale, baseRotate:p.rotate, behind:false, orig:{tx:p.tx, ty:p.ty, rotate:p.rotate, scale:p.scale} };
+    var origZ = zTarget(el).style.zIndex || '';
+    state[id] = { tx:p.tx, ty:p.ty, rotate:p.rotate, scale:p.scale, baseRotate:p.rotate, behind:false, origZ:origZ, orig:{tx:p.tx, ty:p.ty, rotate:p.rotate, scale:p.scale} };
   });
 
   try {
@@ -1157,7 +1158,7 @@
     var el = document.querySelector('[data-deco="'+id+'"]');
     var s = state[id];
     el.style.transform = 'translate('+s.tx+'px,'+s.ty+'px) rotate('+s.rotate+'deg) scale('+s.scale+')';
-    zTarget(el).style.zIndex = s.behind ? '-1' : '';
+    zTarget(el).style.zIndex = s.behind ? '-1' : (s.origZ || '');
   }
   Object.keys(state).forEach(applyTransform);
 
@@ -1307,7 +1308,7 @@
     decoEls.forEach(function(el){
       var id = el.getAttribute('data-deco');
       var o = state[id].orig;
-      state[id] = { tx:o.tx, ty:o.ty, rotate:o.rotate, scale:o.scale, baseRotate:o.rotate, behind:false, orig:o };
+      state[id] = { tx:o.tx, ty:o.ty, rotate:o.rotate, scale:o.scale, baseRotate:o.rotate, behind:false, origZ:state[id].origZ, orig:o };
       applyTransform(id);
     });
     persist();
