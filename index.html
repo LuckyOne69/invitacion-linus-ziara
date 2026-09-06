@@ -504,6 +504,81 @@
     padding:2px 0;
   }
   .replay:hover{border-bottom-color:var(--wine-rose);}
+
+  /* RSVP Form Styles */
+  .rsvp-section {
+    margin: 30px 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .rsvp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--wine);
+    margin-bottom: 20px;
+  }
+  .rsvp-form {
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .rsvp-form select,
+  .rsvp-form input,
+  .rsvp-form textarea {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(122,19,48,.35);
+    padding: 8px 0;
+    width: 100%;
+    outline: none;
+    border-radius: 0;
+  }
+  .rsvp-form textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+  .rsvp-form select::placeholder,
+  .rsvp-form input::placeholder,
+  .rsvp-form textarea::placeholder {
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+  .rsvp-form select {
+    color: var(--ink-muted);
+    font-style: italic;
+    cursor: pointer;
+  }
+  .rsvp-form select:focus,
+  .rsvp-form input:focus,
+  .rsvp-form textarea:focus {
+    border-bottom-color: var(--wine);
+  }
+  .rsvp-submit {
+    margin-top: 15px;
+    background: var(--wine);
+    color: #fff;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background .3s ease;
+  }
+  .rsvp-submit:hover {
+    background: var(--ink);
+  }
+
 </style>
 </head>
 <body>
@@ -583,6 +658,26 @@
 
         <p class="detail">Confirmación</p>
         <p class="detail-value">Nos encantaría contar contigo, cuéntanos si podrás acompañarnos.</p>
+
+        <p class="detail">Código de vestimenta</p>
+        <p class="detail-value">Formal (datos de prueba)</p>
+
+        <div class="rsvp-section">
+          <h3 class="rsvp-title">CONFIRMA tu ASISTENCIA</h3>
+          <form class="rsvp-form" id="rsvpForm" onsubmit="event.preventDefault(); alert('RSVP enviado (modo de prueba)');">
+            <select class="rsvp-select" required>
+              <option value="" disabled selected>Número de personas</option>
+              <option value="1">1 Persona</option>
+              <option value="2">2 Personas</option>
+              <option value="3">3 Personas</option>
+              <option value="4">4 Personas</option>
+            </select>
+            <input type="text" class="rsvp-input" placeholder="Nombre de los asistentes" required>
+            <input type="tel" class="rsvp-input" placeholder="Teléfono" required>
+            <textarea class="rsvp-textarea" placeholder="Mensaje para los novios"></textarea>
+            <button type="submit" class="rsvp-submit">Enviar</button>
+          </form>
+        </div>
 
         <div class="divider-row">
           <svg class="flourish" viewBox="0 0 120 14" width="120" height="14" aria-hidden="true">
