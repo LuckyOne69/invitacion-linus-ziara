@@ -664,17 +664,10 @@
 
         <div class="rsvp-section">
           <h3 class="rsvp-title">CONFIRMA tu ASISTENCIA</h3>
-          <form class="rsvp-form" id="rsvpForm" onsubmit="event.preventDefault(); alert('RSVP enviado (modo de prueba)');">
-            <select class="rsvp-select" required>
-              <option value="" disabled selected>Número de personas</option>
-              <option value="1">1 Persona</option>
-              <option value="2">2 Personas</option>
-              <option value="3">3 Personas</option>
-              <option value="4">4 Personas</option>
-            </select>
-            <input type="text" class="rsvp-input" placeholder="Nombre de los asistentes" required>
-            <input type="tel" class="rsvp-input" placeholder="Teléfono" required>
-            <textarea class="rsvp-textarea" placeholder="Mensaje para los novios"></textarea>
+          <form class="rsvp-form" id="rsvpForm">
+            <input type="text" id="rsvpName" class="rsvp-input" placeholder="Nombre de los asistentes" required>
+            <input type="tel" id="rsvpPhone" class="rsvp-input" placeholder="Teléfono" required>
+            <textarea id="rsvpMessage" class="rsvp-textarea" placeholder="Mensaje para los novios"></textarea>
             <button type="submit" class="rsvp-submit">Enviar</button>
           </form>
         </div>
@@ -765,6 +758,28 @@
       opened = false;
       envelope.classList.remove('open');
     });
+
+    var rsvpForm = document.getElementById('rsvpForm');
+    if (rsvpForm) {
+      rsvpForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name = document.getElementById('rsvpName').value.trim();
+        var phone = document.getElementById('rsvpPhone').value.trim();
+        var message = document.getElementById('rsvpMessage').value.trim();
+        
+        var text = "¡Hola! Confirmo mi asistencia.\n\n" +
+                   "Nombre: " + name + "\n" +
+                   "Teléfono: " + phone;
+        if (message) {
+          text += "\n\nMensaje: " + message;
+        }
+        
+        var waNumber = "18098683167";
+        var waUrl = "https://wa.me/" + waNumber + "?text=" + encodeURIComponent(text);
+        
+        window.open(waUrl, '_blank');
+      });
+    }
   })();
 </script>
 
