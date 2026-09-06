@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Linus & Ziara</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&display=swap');
 
   :root{
     --stage-bg:#1c0710;
     --stage-bg-2:#2d0b18;
-    --wine:#7a1330;
-    --wine-deep:#4a0518;
-    --wine-soft:#9c3352;
-    --wine-rose:#c98a99;
+    --wine:#b81a29;
+    --wine-deep:#820e18;
+    --wine-soft:#cc2535;
+    --wine-rose:#e35d64;
     --paper:#fffdfb;
     --paper-shade:#f4e9ea;
     --ink:#2b1116;
@@ -192,15 +192,26 @@
   .envelope.open .envelope-flap{transform:rotateX(180deg); z-index:0;}
 
   .seal-mark{
-    border-radius:50%;
-    background:radial-gradient(ellipse at 32% 26%, var(--gold-hi), var(--gold) 48%, var(--gold-deep) 100%);
-    box-shadow:0 6px 14px rgba(20,2,5,.5), inset 0 0 0 1px rgba(255,241,204,.5), inset 0 -3px 5px rgba(74,52,16,.4);
+    width: 100%; height: 100%;
+    border-radius: 46% 54% 50% 50% / 49% 52% 48% 51%;
+    background:radial-gradient(ellipse at 35% 30%, var(--gold-hi) 0%, var(--gold) 45%, var(--gold-deep) 90%, #593510 100%);
+    box-shadow:0 6px 14px rgba(20,2,5,.5), inset 0 0 0 1px rgba(255,241,204,.3), inset 0 -4px 6px rgba(74,52,16,.6), inset 2px 2px 4px rgba(255,241,204,.4);
     display:flex; align-items:center; justify-content:center;
-    font-family:'Alex Brush', cursive;
+    font-family:'Pinyon Script', cursive;
     font-weight:400;
     letter-spacing:.02em;
     color:var(--gold-ink);
     text-shadow:0 1px 0 rgba(255,238,196,.55), 0 -1px 1px rgba(51,32,4,.5);
+    position: relative;
+  }
+  .seal-mark::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 51% 49% 53% 47% / 48% 52% 49% 51%;
+    background: radial-gradient(ellipse at 40% 40%, transparent 60%, rgba(74,52,16,.25) 100%);
+    box-shadow: inset 0 2px 4px rgba(255,241,204,.5), inset 0 -2px 4px rgba(74,52,16,.6);
+    z-index: -1;
   }
   .seal-mark .amp{
     font-size:1.05em;
@@ -209,9 +220,9 @@
   .seal{
     position:absolute;
     top:35%; left:50%;
-    width:60px; height:50px;
+    width:65px; height:65px;
     transform:translate(-50%,-50%);
-    font-size:24px;
+    font-size:32px;
     z-index:5;
     transition:opacity .4s ease, transform .5s ease;
   }
