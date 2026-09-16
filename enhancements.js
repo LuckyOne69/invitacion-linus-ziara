@@ -42,7 +42,7 @@
     input.addEventListener('input', () => input.setCustomValidity(input.value.trim() ? '' : 'Completa este campo.'));
   });
   document.getElementById('calendarBtn').addEventListener('click', () => {
-    const content = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Linus y Ziara//Invitacion//ES','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:linus-ziara-20261107@invitation.local','DTSTAMP:20260911T000000Z','DTSTART:20261107T202000Z','SUMMARY:Boda de Linus y Ziara','LOCATION:En casa de los novios','DESCRIPTION:Formal de noche. Hora local: 4:20 PM (República Dominicana).','URL:https://www.google.com/maps?q=18.35875%2C-70.169000','END:VEVENT','END:VCALENDAR',''].join('\r\n');
+    const content = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Linus y Ziara//Invitacion//ES','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:linus-ziara-20261107@invitation.local','DTSTAMP:20260911T000000Z','DTSTART:20261107T202000Z','SUMMARY:Boda de Linus y Ziara','LOCATION:En Doña Ana, San Cristóbal','DESCRIPTION:Formal de noche. Hora local: 4:20 PM (República Dominicana).','URL:https://www.google.com/maps?q=18.35875%2C-70.169000','END:VEVENT','END:VCALENDAR',''].join('\r\n');
     const url = URL.createObjectURL(new Blob([content],{type:'text/calendar;charset=utf-8'}));
     const link = document.createElement('a'); link.href=url;link.download='Boda-Linus-y-Ziara.ics';document.body.append(link);link.click();link.remove();setTimeout(() => URL.revokeObjectURL(url),10000);
   });
