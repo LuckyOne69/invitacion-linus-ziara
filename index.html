@@ -873,7 +873,7 @@
 <meta name="description" content="Linus y Ziara · Nos casamos el 7 de noviembre de 2026. Una invitación para compartir nuestro gran día.">
 <meta name="theme-color" content="#73142b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%2373142b'/%3E%3Ctext x='32' y='43' text-anchor='middle' fill='%23f2d998' font-size='34' font-family='serif'%3ELZ%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="enhancements.css">
+<link rel="stylesheet" href="enhancements.css?v=20260916-portrait">
 </head>
 <body>
 
@@ -916,7 +916,7 @@
     <div class="slip slip--hero">
       <img class="clip-deco clip-lg deco" data-deco="clip-hero" src="assets/clip_tall.png" alt="" style="margin-left:-22px; width:44px; transform:translate(0px,0px) rotate(-7deg) scale(1);">
       <div class="card-band">
-        <img src="assets/invitation-media-1.jpg" alt="Linus y Ziara">
+        <img src="assets/linus-ziara-recuerdo.jpeg" alt="Linus y Ziara">
         <div class="tint"></div>
         <div class="band-content">
           <svg class="flourish on-photo" viewBox="0 0 120 14" width="90" height="11" aria-hidden="true">
@@ -1011,6 +1011,20 @@
       </div>
     </div>
 
+    <section class="slip gifts-section" id="gifts" aria-labelledby="giftsTitle">
+      <p class="overline">UN DETALLE CON AMOR</p>
+      <h2 class="section-title" id="giftsTitle">Tu presencia es nuestro mejor regalo</h2>
+      <p class="gift-message">Compartir este día contigo es lo que más ilusión nos hace. No necesitas traer nada más que tus ganas de celebrar y un abrazo para nosotros.</p>
+      <p class="gift-message">Si además nace de tu corazón hacernos un obsequio, puedes acompañarnos en el comienzo de esta nueva etapa con un aporte a nuestro hogar. Es un gesto completamente opcional, que recibiremos con mucho cariño y gratitud.</p>
+      <details class="gift-details">
+        <summary>Ver datos para un obsequio <span aria-hidden="true">＋</span></summary>
+        <dl class="bank-details"><div><dt>Banco</dt><dd>Banreservas</dd></div><div><dt>Tipo de cuenta</dt><dd>Ahorro</dd></div><div><dt>Número de cuenta</dt><dd id="giftAccount">9605369016</dd></div></dl>
+        <button type="button" class="action-btn" id="copyAccountBtn">Copiar número de cuenta</button>
+        <p class="form-note" id="copyAccountStatus" role="status"></p>
+      </details>
+      <p class="gift-closing">Gracias por ser parte de nuestra historia.</p>
+    </section>
+
     <div class="slip rot-b" style="padding-bottom:30px;">
       <div class="divider-row">
         <svg class="flourish" viewBox="0 0 120 14" width="120" height="14" aria-hidden="true">
@@ -1082,6 +1096,7 @@
       audio.volume = 0.2;
       audio.play().catch(function(){});
       setTimeout(function(){
+        document.getElementById('invitation').scrollTo({top: 0, left: 0, behavior: 'instant'});
         body.classList.add('revealed');
         document.getElementById('invitation').inert = false;
         document.getElementById('stage').inert = true;
@@ -1356,6 +1371,6 @@
 })();
 </script>
 
-<script src="enhancements.js"></script>
+<script src="enhancements.js?v=20260916"></script>
 </body>
 </html>

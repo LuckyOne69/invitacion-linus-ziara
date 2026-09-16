@@ -48,3 +48,16 @@
   });
   document.querySelectorAll('img').forEach(img => { img.decoding='async'; if (!img.closest('.stage,.slip--hero')) img.loading='lazy'; });
 })();
+
+(() => {
+  const button = document.getElementById('copyAccountBtn');
+  button.addEventListener('click', async () => {
+    const status = document.getElementById('copyAccountStatus');
+    try {
+      await navigator.clipboard.writeText(document.getElementById('giftAccount').textContent.trim());
+      status.textContent = 'Número de cuenta copiado.';
+    } catch {
+      status.textContent = 'Puedes seleccionar y copiar el número de cuenta que aparece arriba.';
+    }
+  });
+})();
