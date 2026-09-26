@@ -137,7 +137,7 @@
     "personas": 1,
     "group": "ziara",
     "relation": "Familia",
-    "status": "pending",
+    "status": "declined",
     "notes": "Comparte teléfono con Dircia Moreno",
     "photo": ""
   },
@@ -151,7 +151,7 @@
     "personas": 1,
     "group": "ziara",
     "relation": "Familia",
-    "status": "pending",
+    "status": "confirmed",
     "notes": "Comparte teléfono con Dineidi Moreno",
     "photo": ""
   },
