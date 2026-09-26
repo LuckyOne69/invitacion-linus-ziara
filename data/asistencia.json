@@ -166,7 +166,7 @@
     "personas": 1,
     "group": "ziara",
     "relation": "Amiga",
-    "status": "pending",
+    "status": "confirmed",
     "notes": "",
     "photo": ""
   },
@@ -181,7 +181,7 @@
     "personas": 2,
     "group": "ziara",
     "relation": "Pareja (13 y 14)",
-    "status": "pending",
+    "status": "confirmed",
     "notes": "Plazas reservadas: 2 personas",
     "photo": ""
   },
@@ -195,7 +195,7 @@
     "personas": 1,
     "group": "ziara",
     "relation": "Amigo",
-    "status": "pending",
+    "status": "confirmed",
     "notes": "",
     "photo": ""
   },
