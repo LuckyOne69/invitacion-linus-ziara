@@ -800,30 +800,47 @@
   <div class="modal-card">
     <div class="modal-handle"></div>
     <div class="modal-head">
-      <h3 class="modal-title">Guardado Automático en Git</h3>
+      <h3 class="modal-title">Sincronización con Git</h3>
       <button class="btn-m-close" onclick="closeModal('gitModal')">&times;</button>
     </div>
 
-    <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:12px;">
-      Conecta tu Token de GitHub para que cada vez que tú o Ziara marquen a alguien como <b>Confirmado</b>, se guarde <b>automáticamente en el Git</b> en tiempo real sin tener que mandar códigos.
-    </p>
-
-    <div class="form-item">
-      <label>Token de GitHub (Personal Access Token):</label>
-      <input type="password" id="gitTokenInput" class="form-input" placeholder="ghp_xxxxxxxxxxxx...">
-      <small style="font-size:0.72rem; color:var(--text-muted); margin-top:3px;">
-        👉 <a href="https://github.com/settings/tokens/new?description=Boda-Linus-Ziara-Sync&scopes=repo" target="_blank" style="color:var(--wine); font-weight:700;">Haz clic aquí para crear tu token en GitHub</a> (marca la casilla <b>repo</b> y pulsa Generar).
-      </small>
+    <!-- Active Connected State -->
+    <div id="gitConnectedBox" style="display:none; background:rgba(46,125,50,0.08); border:1px solid rgba(46,125,50,0.25); border-radius:12px; padding:14px; margin-bottom:14px;">
+      <div style="color:#2e7d32; font-weight:700; font-size:0.92rem; display:flex; align-items:center; gap:8px;">
+        <span>✅ Conectado a Git con éxito</span>
+      </div>
+      <p style="font-size:0.78rem; color:var(--text); margin:6px 0 12px; line-height:1.4;">
+        Cada confirmación o cambio se guarda <b>automáticamente y en tiempo real</b> en tu repositorio de GitHub. Linus y Ziara siempre ven los mismos datos actualizados.
+      </p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button type="button" class="btn-save-act" onclick="fetchFromGit(true)" style="flex:1; margin:0; padding:9px 12px; font-size:0.78rem;">🔄 Sincronizar Ahora</button>
+        <button type="button" onclick="disconnectGit()" style="background:#fff; color:var(--red); border:1px solid #ffcdd2; padding:9px 12px; border-radius:10px; font-size:0.78rem; font-weight:600; cursor:pointer;">Desconectar</button>
+      </div>
     </div>
 
-    <button type="button" class="btn-save-act" onclick="saveGitToken()" style="margin-top:4px;">🔐 Conectar y Guardar en Git</button>
+    <!-- Connect Form (when not connected) -->
+    <div id="gitConnectForm">
+      <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:12px;">
+        Conecta tu Token de GitHub para que cada vez que tú o Ziara marquen a alguien como <b>Confirmado</b>, se guarde <b>automáticamente en el Git</b> en tiempo real sin tener que mandar códigos.
+      </p>
 
-    <div id="ziaraShareSection" style="margin-top:20px; padding-top:14px; border-top:1px solid var(--border); display:none;">
-      <label style="font-size:0.8rem; font-weight:700; color:var(--wine);">📲 Enlace para el celular de Ziara:</label>
-      <p style="font-size:0.75rem; color:var(--text-muted); margin:4px 0 8px;">
+      <div class="form-item">
+        <label>Token de GitHub (Personal Access Token):</label>
+        <input type="password" id="gitTokenInput" class="form-input" placeholder="ghp_xxxxxxxxxxxx...">
+        <small style="font-size:0.72rem; color:var(--text-muted); margin-top:3px;">
+          👉 <a href="https://github.com/settings/tokens/new?description=Boda-Linus-Ziara-Sync&scopes=repo" target="_blank" style="color:var(--wine); font-weight:700;">Haz clic aquí para crear tu token en GitHub</a> (marca la casilla <b>repo</b> y pulsa Generar).
+        </small>
+      </div>
+
+      <button type="button" class="btn-save-act" onclick="saveGitToken()" style="margin-top:4px;">🔐 Conectar y Guardar en Git</button>
+    </div>
+
+    <div id="ziaraShareSection" style="margin-top:16px; padding-top:14px; border-top:1px solid var(--border); display:none;">
+      <label style="font-size:0.82rem; font-weight:700; color:var(--wine);">📲 Enlace para el celular de Ziara:</label>
+      <p style="font-size:0.75rem; color:var(--text-muted); margin:4px 0 10px; line-height:1.4;">
         Envíale este enlace por WhatsApp a Ziara. Al tocarlo en su celular, quedará conectada a Git automáticamente sin tener que configurar nada.
       </p>
-      <button type="button" class="btn-wa-direct" onclick="copyZiaraLink()">
+      <button type="button" class="btn-wa-direct" onclick="copyZiaraLink()" style="width:100%; justify-content:center;">
         <span>💬 Copiar enlace directo para Ziara</span>
       </button>
     </div>
@@ -834,7 +851,7 @@
 <div class="toast" id="toastMsg">Operación exitosa</div>
 
 <script>
-const INITIAL_DATA = [{"id": 101, "list_num": "1", "name": "Zairys Ortiz", "greeting": "Zairys", "phone": "", "wa": "", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 102, "list_num": "2", "name": "Ziarys Franco", "greeting": "Ziarys", "phone": "+1 (829) 327-9472", "wa": "18293279472", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 103, "list_num": "3", "name": "Miguel Franco (Hermano)", "greeting": "Miguel", "phone": "+1 (809) 820-7547", "wa": "18098207547", "personas": 1, "group": "ziara", "relation": "Hermano", "status": "pending", "notes": "", "photo": ""}, {"id": 104, "list_num": "4", "name": "Miguel Franco", "greeting": "Miguel", "phone": "+1 (849) 861-7424", "wa": "18498617424", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 105, "list_num": "5", "name": "Yanela Ortiz", "greeting": "Yanela", "phone": "", "wa": "", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 106, "list_num": "6", "name": "Angela Ortiz", "greeting": "Angela", "phone": "+1 (849) 431-4493", "wa": "18494314493", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 107, "list_num": "7", "name": "Saul Ortiz", "greeting": "Saul", "phone": "+1 (809) 250-9989", "wa": "18092509989", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 108, "list_num": "8", "name": "Jonny Franco (Tío)", "greeting": "Jonny", "link_name": "Jonny Franco", "phone": "+1 (829) 440-9174", "wa": "18294409174", "personas": 1, "group": "ziara", "relation": "Tío", "status": "pending", "notes": "Comparte teléfono con Jonny Franco primo", "photo": ""}, {"id": 109, "list_num": "9", "name": "Jonny Franco (Primo)", "greeting": "Jonny", "link_name": "Jonny Franco", "phone": "+1 (829) 440-9174", "wa": "18294409174", "personas": 1, "group": "ziara", "relation": "Primo", "status": "pending", "notes": "Comparte teléfono con Jonny Franco tío", "photo": ""}, {"id": 110, "list_num": "10", "name": "Dineidi Moreno", "greeting": "Dineidi", "phone": "+1 (829) 262-3338", "wa": "18292623338", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "Comparte teléfono con Dircia Moreno", "photo": ""}, {"id": 111, "list_num": "11", "name": "Dircia Moreno", "greeting": "Dircia", "phone": "+1 (829) 262-3338", "wa": "18292623338", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "Comparte teléfono con Dineidi Moreno", "photo": ""}, {"id": 112, "list_num": "12", "name": "Diana Vallejo (Carola)", "greeting": "Diana", "link_name": "Diana Vallejo", "phone": "+1 (829) 722-4935", "wa": "18297224935", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 113, "list_num": "13-14", "name": "Ana Olivares y esposo", "greeting": "Ana", "link_name": "Ana Olivares y esposo", "phone": "+1 (809) 940-1441", "wa": "18099401441", "personas": 2, "group": "ziara", "relation": "Pareja (13 y 14)", "status": "pending", "notes": "Plazas reservadas: 2 personas", "photo": ""}, {"id": 115, "list_num": "15", "name": "Anthony Hernandez", "greeting": "Anthony", "phone": "+1 (829) 722-3674", "wa": "18297223674", "personas": 1, "group": "ziara", "relation": "Amigo", "status": "pending", "notes": "", "photo": ""}, {"id": 116, "list_num": "16", "name": "Vanessa Gutierrez", "greeting": "Vanessa", "phone": "+1 (809) 866-9902", "wa": "18098669902", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 117, "list_num": "17", "name": "Lia Custodio", "greeting": "Lia", "phone": "+1 (809) 868-5984", "wa": "18098685984", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 118, "list_num": "18", "name": "Lory Encarnación", "greeting": "Lory", "phone": "+1 (829) 722-2966", "wa": "18297222966", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 119, "list_num": "19", "name": "Jeniffer Sierra", "greeting": "Jeniffer", "phone": "+1 (809) 470-2708", "wa": "18094702708", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 120, "list_num": "20", "name": "Ysmeilin Dipré", "greeting": "Ysmeilin", "phone": "+1 (809) 322-0084", "wa": "18093220084", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 121, "list_num": "21", "name": "Yokeini Guzman", "greeting": "Yokeini", "phone": "+1 (829) 828-6962", "wa": "18298286962", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 122, "list_num": "22", "name": "Maria Bautista", "greeting": "Maria", "phone": "", "wa": "", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 123, "list_num": "23", "name": "Zaima", "greeting": "Zaima", "phone": "+1 (224) 247-7118", "wa": "12242477118", "personas": 1, "group": "ziara", "relation": "Amiga (EE. UU.)", "status": "pending", "notes": "", "photo": ""}, {"id": 124, "list_num": "24", "name": "Neidy Reyes", "greeting": "Neidy", "phone": "+1 (829) 382-0611", "wa": "18293820611", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 1, "list_num": "1", "name": "Moreno Aquino", "greeting": "Moreno", "phone": "809-714-1816", "wa": "18097141816", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 2, "list_num": "2", "name": "Guarin Aquino", "greeting": "Guarin", "phone": "829-684-8921", "wa": "18296848921", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 3, "list_num": "3", "name": "Daty Nidian Aquino", "greeting": "Daty Nidian", "phone": "829-358-4005", "wa": "18293584005", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 4, "list_num": "4", "name": "Caco Aquino / Luis Alexander", "greeting": "Caco", "link_name": "Luis Alexander Aquino", "phone": "829-425-3775", "wa": "18294253775", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 5, "list_num": "5", "name": "Ciprian Aquino", "greeting": "Ciprian", "phone": "849-316-3405", "wa": "18493163405", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 6, "list_num": "6", "name": "Mariola Aquino", "greeting": "Mariola", "phone": "829-208-3786", "wa": "18292083786", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 7, "list_num": "7", "name": "Jose Aquino", "greeting": "Jose", "phone": "809-964-5963", "wa": "18099645963", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 8, "list_num": "8", "name": "Francisco Aquino", "greeting": "Francisco", "phone": "829-805-2366", "wa": "18298052366", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 9, "list_num": "9", "name": "Daniel Aquino", "greeting": "Daniel", "phone": "809-297-2037", "wa": "18092972037", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 10, "list_num": "10", "name": "Manuel Aquino", "greeting": "Manuel", "phone": "829-894-6568", "wa": "18298946568", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 11, "list_num": "11", "name": "Mirciades Aquino", "greeting": "Mirciades", "phone": "849-497-4621", "wa": "18494974621", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 12, "list_num": "12", "name": "Moises Abraham Chean Saviñon", "greeting": "Moises", "phone": "809-980-7682", "wa": "18099807682", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 13, "list_num": "13", "name": "Hestor Aquino", "greeting": "Hestor", "phone": "809-313-2240", "wa": "18093132240", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 14, "list_num": "14", "name": "Mari Rosario", "greeting": "Mari", "phone": "809-899-2055", "wa": "18098992055", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 15, "list_num": "15", "name": "Osvaldo Perdomo", "greeting": "Osvaldo", "phone": "829-494-9037", "wa": "18294949037", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 16, "list_num": "16", "name": "Niolvania Aquino", "greeting": "Niolvania", "phone": "829-205-5776", "wa": "18292055776", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 17, "list_num": "17", "name": "Lars Salathe", "greeting": "Lars", "phone": "829-440-1946", "wa": "18294401946", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 18, "list_num": "18", "name": "Leo Salathe", "greeting": "Leo", "phone": "41.98 30270 07", "wa": "41983027007", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "Posible móvil suizo +41 78 302 70 07", "photo": ""}, {"id": 19, "list_num": "19", "name": "Lucas Salathe", "greeting": "Lucas", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 20, "list_num": "20", "name": "Yojarlin", "greeting": "Yojarlin", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Amigo", "status": "pending", "notes": "", "photo": ""}, {"id": 21, "list_num": "21", "name": "Heidy Aquino", "greeting": "Heidy", "phone": "809-783-6618", "wa": "18097836618", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 22, "list_num": "22", "name": "Junior Aquino", "greeting": "Junior", "phone": "829-520-7169", "wa": "18295207169", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 23, "list_num": "23", "name": "Jhenison Aquino", "greeting": "Jhenison", "phone": "809-460-5356", "wa": "18094605356", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 24, "list_num": "24", "name": "Maridalis Aquino", "greeting": "Maridalis", "phone": "849-206-1098", "wa": "18492061098", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 25, "list_num": "25", "name": "Diego Aquino (Kiña)", "greeting": "Diego", "link_name": "Diego Aquino", "phone": "809-396-3554", "wa": "18093963554", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 26, "list_num": "26", "name": "Yulisa Aquino", "greeting": "Yulisa", "phone": "829-936-0413", "wa": "18299360413", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 27, "list_num": "27", "name": "Marian", "greeting": "Marian", "phone": "829-444-6226", "wa": "18294446226", "personas": 1, "group": "linus", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 28, "list_num": "28", "name": "Victoria", "greeting": "Victoria", "phone": "829-505-3926", "wa": "18295053926", "personas": 1, "group": "linus", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 29, "list_num": "29", "name": "Novia de Leo", "greeting": "Amiga", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Pareja de Leo", "status": "pending", "notes": "Puede unirse con Leo (2 plazas)", "photo": ""}, {"id": 30, "list_num": "30", "name": "Esposa de Yojarlin", "greeting": "Amiga", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Esposa de Yojarlin", "status": "pending", "notes": "Puede unirse con Yojarlin (2 plazas)", "photo": ""}];
+const INITIAL_DATA = [{"id": 101, "list_num": "1", "name": "Zairys Ortiz", "greeting": "Zairys", "phone": "", "wa": "", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 102, "list_num": "2", "name": "Ziarys Franco", "greeting": "Ziarys", "phone": "+1 (829) 327-9472", "wa": "18293279472", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 103, "list_num": "3", "name": "Miguel Franco (Hermano)", "greeting": "Miguel", "phone": "+1 (809) 820-7547", "wa": "18098207547", "personas": 1, "group": "ziara", "relation": "Hermano", "status": "pending", "notes": "", "photo": ""}, {"id": 104, "list_num": "4", "name": "Miguel Franco", "greeting": "Miguel", "phone": "+1 (849) 861-7424", "wa": "18498617424", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 105, "list_num": "5", "name": "Yanela Ortiz", "greeting": "Yanela", "phone": "", "wa": "", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 106, "list_num": "6", "name": "Angela Ortiz", "greeting": "Angela", "phone": "+1 (849) 431-4493", "wa": "18494314493", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 107, "list_num": "7", "name": "Saul Ortiz", "greeting": "Saul", "phone": "+1 (809) 250-9989", "wa": "18092509989", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 108, "list_num": "8", "name": "Jonny Franco (Tío)", "greeting": "Jonny", "link_name": "Jonny Franco", "phone": "+1 (829) 440-9174", "wa": "18294409174", "personas": 1, "group": "ziara", "relation": "Tío", "status": "pending", "notes": "Comparte teléfono con Jonny Franco primo", "photo": ""}, {"id": 109, "list_num": "9", "name": "Jonny Franco (Primo)", "greeting": "Jonny", "link_name": "Jonny Franco", "phone": "+1 (829) 440-9174", "wa": "18294409174", "personas": 1, "group": "ziara", "relation": "Primo", "status": "pending", "notes": "Comparte teléfono con Jonny Franco tío", "photo": ""}, {"id": 110, "list_num": "10", "name": "Dineidi Moreno", "greeting": "Dineidi", "phone": "+1 (829) 262-3338", "wa": "18292623338", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "Comparte teléfono con Dircia Moreno", "photo": ""}, {"id": 111, "list_num": "11", "name": "Dircia Moreno", "greeting": "Dircia", "phone": "+1 (829) 262-3338", "wa": "18292623338", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "Comparte teléfono con Dineidi Moreno", "photo": ""}, {"id": 112, "list_num": "12", "name": "Diana Vallejo (Carola)", "greeting": "Diana", "link_name": "Diana Vallejo", "phone": "+1 (829) 722-4935", "wa": "18297224935", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 113, "list_num": "13-14", "name": "Ana Olivares y esposo", "greeting": "Ana", "link_name": "Ana Olivares y esposo", "phone": "+1 (809) 940-1441", "wa": "18099401441", "personas": 2, "group": "ziara", "relation": "Pareja (13 y 14)", "status": "pending", "notes": "Plazas reservadas: 2 personas", "photo": ""}, {"id": 115, "list_num": "15", "name": "Anthony Hernandez", "greeting": "Anthony", "phone": "+1 (829) 722-3674", "wa": "18297223674", "personas": 1, "group": "ziara", "relation": "Amigo", "status": "pending", "notes": "", "photo": ""}, {"id": 116, "list_num": "16", "name": "Vanessa Gutierrez", "greeting": "Vanessa", "phone": "+1 (809) 866-9902", "wa": "18098669902", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 117, "list_num": "17", "name": "Lia Custodio", "greeting": "Lia", "phone": "+1 (809) 868-5984", "wa": "18098685984", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 118, "list_num": "18", "name": "Lory Encarnación", "greeting": "Lory", "phone": "+1 (829) 722-2966", "wa": "18297222966", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 119, "list_num": "19", "name": "Jeniffer Sierra", "greeting": "Jeniffer", "phone": "+1 (809) 470-2708", "wa": "18094702708", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 120, "list_num": "20", "name": "Ysmeilin Dipré", "greeting": "Ysmeilin", "phone": "+1 (809) 322-0084", "wa": "18093220084", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 121, "list_num": "21", "name": "Yokeini Guzman", "greeting": "Yokeini", "phone": "+1 (829) 828-6962", "wa": "18298286962", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 122, "list_num": "22", "name": "Maria Bautista", "greeting": "Maria", "phone": "", "wa": "", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 123, "list_num": "23", "name": "Zaima", "greeting": "Zaima", "phone": "+1 (224) 247-7118", "wa": "12242477118", "personas": 1, "group": "ziara", "relation": "Amiga (EE. UU.)", "status": "pending", "notes": "", "photo": ""}, {"id": 124, "list_num": "24", "name": "Neidy Reyes", "greeting": "Neidy", "phone": "+1 (829) 382-0611", "wa": "18293820611", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 1, "list_num": "1", "name": "Moreno Aquino", "greeting": "Moreno", "phone": "809-714-1816", "wa": "18097141816", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 2, "list_num": "2", "name": "Guarin Aquino", "greeting": "Guarin", "phone": "829-684-8921", "wa": "18296848921", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 3, "list_num": "3", "name": "Daty Nidian Aquino", "greeting": "Daty Nidian", "phone": "829-358-4005", "wa": "18293584005", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 4, "list_num": "4", "name": "Caco Aquino / Luis Alexander", "greeting": "Caco", "link_name": "Luis Alexander Aquino", "phone": "829-425-3775", "wa": "18294253775", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 5, "list_num": "5", "name": "Ciprian Aquino", "greeting": "Ciprian", "phone": "849-316-3405", "wa": "18493163405", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 6, "list_num": "6", "name": "Mariola Aquino", "greeting": "Mariola", "phone": "829-208-3786", "wa": "18292083786", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 7, "list_num": "7", "name": "Jose Aquino", "greeting": "Jose", "phone": "809-964-5963", "wa": "18099645963", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 8, "list_num": "8", "name": "Francisco Aquino", "greeting": "Francisco", "phone": "829-805-2366", "wa": "18298052366", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 9, "list_num": "9", "name": "Daniel Aquino", "greeting": "Daniel", "phone": "809-297-2037", "wa": "18092972037", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 10, "list_num": "10", "name": "Manuel Aquino", "greeting": "Manuel", "phone": "829-894-6568", "wa": "18298946568", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 11, "list_num": "11", "name": "Mirciades Aquino", "greeting": "Mirciades", "phone": "849-497-4621", "wa": "18494974621", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 12, "list_num": "12", "name": "Moises Abraham Chean Saviñon", "greeting": "Moises", "phone": "809-980-7682", "wa": "18099807682", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 13, "list_num": "13", "name": "Hestor Aquino", "greeting": "Hestor", "phone": "809-313-2240", "wa": "18093132240", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 14, "list_num": "14", "name": "Mari Rosario", "greeting": "Mari", "phone": "809-899-2055", "wa": "18098992055", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 15, "list_num": "15", "name": "Osvaldo Perdomo", "greeting": "Osvaldo", "phone": "829-494-9037", "wa": "18294949037", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 16, "list_num": "16", "name": "Niolvania Aquino", "greeting": "Niolvania", "phone": "829-205-5776", "wa": "18292055776", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 17, "list_num": "17", "name": "Lars Salathe", "greeting": "Lars", "phone": "829-440-1946", "wa": "18294401946", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 18, "list_num": "18", "name": "Leo Salathe", "greeting": "Leo", "phone": "41.98 30270 07", "wa": "41983027007", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "Posible móvil suizo +41 78 302 70 07", "photo": ""}, {"id": 19, "list_num": "19", "name": "Lucas Salathe", "greeting": "Lucas", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 20, "list_num": "20", "name": "Yojarlin", "greeting": "Yojarlin", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Amigo", "status": "pending", "notes": "", "photo": ""}, {"id": 21, "list_num": "21", "name": "Heidy Aquino", "greeting": "Heidy", "phone": "809-783-6618", "wa": "18097836618", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 22, "list_num": "22", "name": "Junior Aquino", "greeting": "Junior", "phone": "829-520-7169", "wa": "18295207169", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 23, "list_num": "23", "name": "Jhenison Aquino", "greeting": "Jhenison", "phone": "809-460-5356", "wa": "18094605356", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 24, "list_num": "24", "name": "Maridalis Aquino", "greeting": "Maridalis", "phone": "849-206-1098", "wa": "18492061098", "personas": 1, "group": "linus", "relation": "Familia", "status": "confirmed", "notes": "", "photo": ""}, {"id": 25, "list_num": "25", "name": "Diego Aquino (Kiña)", "greeting": "Diego", "link_name": "Diego Aquino", "phone": "809-396-3554", "wa": "18093963554", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 26, "list_num": "26", "name": "Yulisa Aquino", "greeting": "Yulisa", "phone": "829-936-0413", "wa": "18299360413", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 27, "list_num": "27", "name": "Marian", "greeting": "Marian", "phone": "829-444-6226", "wa": "18294446226", "personas": 1, "group": "linus", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 28, "list_num": "28", "name": "Victoria", "greeting": "Victoria", "phone": "829-505-3926", "wa": "18295053926", "personas": 1, "group": "linus", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 29, "list_num": "29", "name": "Novia de Leo", "greeting": "Amiga", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Pareja de Leo", "status": "pending", "notes": "Puede unirse con Leo (2 plazas)", "photo": ""}, {"id": 30, "list_num": "30", "name": "Esposa de Yojarlin", "greeting": "Amiga", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Esposa de Yojarlin", "status": "pending", "notes": "Puede unirse con Yojarlin (2 plazas)", "photo": ""}];
 const GITHUB_REPO = 'LuckyOne69/invitacion-linus-ziara';
 const GITHUB_FILE_PATH = 'data/asistencia.json';
 const LOCAL_STORAGE_KEY = 'linus_ziara_wedding_attendance_v4';
@@ -895,31 +912,59 @@ async function initApp() {
   await fetchFromGit();
 }
 
-async function fetchFromGit() {
+// UTF-8 safe base64 encoding and decoding helpers
+function decodeBase64Utf8(base64) {
+  const binaryString = atob(base64.replace(/\s/g, ''));
+  const bytes = Uint8Array.from(binaryString, c => c.charCodeAt(0));
+  return new TextDecoder('utf-8').decode(bytes);
+}
+
+function encodeBase64Utf8(str) {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+async function fetchFromGit(manualToast = false) {
+  if (manualToast) showToast('Sincronizando con Git...');
   try {
-    const url = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${GITHUB_FILE_PATH}?_t=${Date.now()}`;
-    const res = await fetch(url);
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        guests = data;
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(guests));
-        updateStats();
-        renderCards();
-      }
-    }
-    // Also fetch SHA if token present
+    const headers = {
+      'Accept': 'application/vnd.github.v3+json',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache'
+    };
     if (gitToken) {
-      const metaRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
-        headers: { 'Authorization': `Bearer ${gitToken}`, 'Accept': 'application/vnd.github.v3+json' }
-      });
-      if (metaRes.ok) {
-        const meta = await metaRes.json();
-        gitSha = meta.sha;
+      headers['Authorization'] = `Bearer ${gitToken}`;
+    }
+
+    // Direct GitHub Contents API with timestamp bypasses Fastly CDN caching completely
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}?ref=main&_t=${Date.now()}`;
+    const res = await fetch(url, { headers });
+
+    if (res.ok) {
+      const meta = await res.json();
+      gitSha = meta.sha; // Keep SHA fresh for next commit
+
+      if (meta.content) {
+        const jsonStr = decodeBase64Utf8(meta.content);
+        const data = JSON.parse(jsonStr);
+        if (Array.isArray(data) && data.length > 0) {
+          guests = data;
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(guests));
+          updateStats();
+          renderCards();
+        }
       }
+      updateGitBadgeUI();
+      if (manualToast) showToast('¡Sincronizado con Git al instante!');
+    } else {
+      console.warn('GitHub Contents API status:', res.status);
     }
   } catch(e) {
-    console.log('Using local cached data.');
+    console.warn('Using local cached data:', e);
   }
 }
 
@@ -961,10 +1006,14 @@ function pushToGit(commitMsg) {
 
   gitDebounceTimer = setTimeout(async () => {
     try {
-      // Get current SHA if not present
+      // 1. Always fetch fresh SHA before committing
       if (!gitSha) {
-        const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
-          headers: { 'Authorization': `Bearer ${gitToken}`, 'Accept': 'application/vnd.github.v3+json' }
+        const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}?ref=main&_t=${Date.now()}`, {
+          headers: {
+            'Authorization': `Bearer ${gitToken}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Cache-Control': 'no-cache'
+          }
         });
         if (getRes.ok) {
           const meta = await getRes.json();
@@ -973,7 +1022,7 @@ function pushToGit(commitMsg) {
       }
 
       const contentStr = JSON.stringify(guests, null, 2);
-      const b64 = btoa(unescape(encodeURIComponent(contentStr)));
+      const b64 = encodeBase64Utf8(contentStr);
 
       const putRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
         method: 'PUT',
@@ -996,18 +1045,22 @@ function pushToGit(commitMsg) {
         txt.textContent = '● Guardado en Git';
         showToast('Guardado en Git con éxito');
       } else if (putRes.status === 409) {
-        // Conflict: retry with fresh SHA
+        // Conflict: refresh SHA and retry
+        console.warn('Git conflict 409, updating SHA and retrying...');
         gitSha = null;
         pushToGit(commitMsg);
       } else {
+        const errJson = await putRes.json().catch(() => ({}));
+        console.error('Git error:', putRes.status, errJson);
         badge.className = 'git-status-badge';
         txt.textContent = '⚠️ Error en Git';
       }
     } catch(err) {
+      console.error('Git network error:', err);
       badge.className = 'git-status-badge';
       txt.textContent = '⚠️ Reintentar';
     }
-  }, 1000);
+  }, 600);
 }
 
 function updateStats() {
@@ -1325,11 +1378,23 @@ function removeGuest(id) {
 
 // Git Settings Modal
 function openGitSettingsModal() {
-  document.getElementById('gitTokenInput').value = gitToken;
+  const isConn = !!gitToken;
+  const connBox = document.getElementById('gitConnectedBox');
+  const connForm = document.getElementById('gitConnectForm');
+  const ziaraSec = document.getElementById('ziaraShareSection');
+
+  if (connBox) connBox.style.display = isConn ? 'block' : 'none';
+  if (connForm) connForm.style.display = isConn ? 'none' : 'block';
+  if (ziaraSec) ziaraSec.style.display = isConn ? 'block' : 'none';
+
+  if (!isConn) {
+    const input = document.getElementById('gitTokenInput');
+    if (input) input.value = '';
+  }
   document.getElementById('gitModal').classList.add('open');
 }
 
-function saveGitToken() {
+async function saveGitToken() {
   const tok = document.getElementById('gitTokenInput').value.trim();
   if (!tok) {
     alert('Por favor ingresa un token válido.');
@@ -1339,8 +1404,19 @@ function saveGitToken() {
   localStorage.setItem(TOKEN_STORAGE_KEY, gitToken);
   updateGitBadgeUI();
   closeModal('gitModal');
-  showToast('Token conectado. Guardando en Git...');
-  pushToGit('Conexión inicial de Git');
+  showToast('Token conectado. Sincronizando con Git...');
+  await fetchFromGit(true);
+}
+
+function disconnectGit() {
+  if (confirm('¿Deseas desconectar el token de Git en este dispositivo?')) {
+    gitToken = '';
+    gitSha = null;
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    updateGitBadgeUI();
+    openGitSettingsModal();
+    showToast('Token desconectado');
+  }
 }
 
 function copyZiaraLink() {
