@@ -669,7 +669,7 @@
       <div class="brand-sub">Control de Asistencia · Boda 2026</div>
     </div>
     <div class="header-actions">
-      <div class="git-status-badge" id="gitSyncBadge" onclick="openGitSettingsModal()">
+      <div class="git-status-badge" id="gitSyncBadge" onclick="handleGitBadgeClick()">
         <span class="pulse-dot"></span>
         <span id="gitSyncText">Conectar Git</span>
       </div>
@@ -948,10 +948,8 @@ async function fetchFromGit(manualToast = false) {
       const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}?ref=main&_t=${Date.now()}`;
       const res = await fetch(url, {
         headers: {
-          'Authorization': `Bearer ${gitToken}`,
-          'Accept': 'application/vnd.github.v3+json',
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache'
+          'Authorization': `Bearer ${gitToken.trim()}`,
+          'Accept': 'application/vnd.github.v3+json'
         }
       });
       if (res.ok) {
@@ -971,12 +969,7 @@ async function fetchFromGit(manualToast = false) {
   if (!fetchedData) {
     try {
       const fallbackUrl = `data/asistencia.json?_t=${Date.now()}`;
-      const res = await fetch(fallbackUrl, {
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache'
-        }
-      });
+      const res = await fetch(fallbackUrl);
       if (res.ok) {
         fetchedData = await res.json();
       }
@@ -991,8 +984,7 @@ async function fetchFromGit(manualToast = false) {
       const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}?ref=main&_t=${Date.now()}`;
       const res = await fetch(url, {
         headers: {
-          'Accept': 'application/vnd.github.v3+json',
-          'Cache-Control': 'no-cache'
+          'Accept': 'application/vnd.github.v3+json'
         }
       });
       if (res.ok) {
@@ -1046,7 +1038,20 @@ async function triggerSave(commitMsg = 'Actualiza asistencia') {
 }
 
 let gitDebounceTimer = null;
+let lastCommitMsg = 'Actualiza asistencia';
+
+function handleGitBadgeClick() {
+  const badge = document.getElementById('gitSyncBadge');
+  const txt = document.getElementById('gitSyncText').textContent;
+  if (txt.includes('Reintentar') || txt.includes('Error')) {
+    pushToGit(lastCommitMsg);
+    return;
+  }
+  openGitSettingsModal();
+}
+
 function pushToGit(commitMsg) {
+  if (commitMsg) lastCommitMsg = commitMsg;
   clearTimeout(gitDebounceTimer);
   const badge = document.getElementById('gitSyncBadge');
   const txt = document.getElementById('gitSyncText');
@@ -1055,19 +1060,26 @@ function pushToGit(commitMsg) {
 
   gitDebounceTimer = setTimeout(async () => {
     try {
-      // 1. Always fetch fresh SHA before committing
-      if (!gitSha) {
+      if (!gitToken) {
+        badge.className = 'git-status-badge';
+        txt.textContent = '⚡ Conectar Git';
+        return;
+      }
+
+      // Always fetch fresh SHA before committing to prevent conflicts
+      try {
         const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}?ref=main&_t=${Date.now()}`, {
           headers: {
-            'Authorization': `Bearer ${gitToken}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Cache-Control': 'no-cache'
+            'Authorization': `Bearer ${gitToken.trim()}`,
+            'Accept': 'application/vnd.github.v3+json'
           }
         });
         if (getRes.ok) {
           const meta = await getRes.json();
           gitSha = meta.sha;
         }
+      } catch(err) {
+        console.warn('Could not refresh SHA:', err);
       }
 
       const contentStr = JSON.stringify(guests, null, 2);
@@ -1076,12 +1088,12 @@ function pushToGit(commitMsg) {
       const putRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${gitToken}`,
+          'Authorization': `Bearer ${gitToken.trim()}`,
           'Accept': 'application/vnd.github.v3+json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          message: commitMsg + ' (Boda Linus & Ziara)',
+          message: (commitMsg || 'Actualiza asistencia') + ' (Boda Linus & Ziara)',
           content: b64,
           sha: gitSha
         })
@@ -1103,11 +1115,13 @@ function pushToGit(commitMsg) {
         console.error('Git error:', putRes.status, errJson);
         badge.className = 'git-status-badge';
         txt.textContent = '⚠️ Error en Git';
+        showToast(`Git error: ${putRes.status}`);
       }
     } catch(err) {
       console.error('Git network error:', err);
       badge.className = 'git-status-badge';
       txt.textContent = '⚠️ Reintentar';
+      showToast('Error de red al guardar en Git');
     }
   }, 600);
 }
