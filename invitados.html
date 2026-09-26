@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de Invitaciones · Linus & Ziara</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wine: #73142b;
+      --wine-dark: #530d1e;
+      --wine-light: #94203c;
+      --gold: #d4af37;
+      --gold-light: #f5e8c4;
+      --bg: #f9f6f0;
+      --card-bg: #ffffff;
+      --text: #2c2523;
+      --text-muted: #726865;
+      --border: #e8dfd8;
+      --wa-green: #25D366;
+      --wa-green-dark: #128C7E;
+      --shadow: 0 4px 18px rgba(115, 20, 43, 0.08);
+      --shadow-hover: 0 8px 26px rgba(115, 20, 43, 0.15);
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 80px;
+    }
+    header {
+      background: linear-gradient(135deg, var(--wine-dark) 0%, var(--wine) 100%);
+      color: #fff;
+      padding: 30px 20px 22px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+    .header-content {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .header-tagline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      color: var(--gold-light);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 0.92rem;
+      color: #fce8ee;
+      opacity: 0.9;
+    }
+    .nav-shortcuts {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .nav-link-btn {
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .nav-link-btn:hover { background: #fff; color: var(--wine); }
+
+    .container {
+      max-width: 1100px;
+      margin: 24px auto 0;
+      padding: 0 16px;
+    }
+    /* Stats Bar */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-2px); }
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--wine);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+    .progress-wrap {
+      background: #e8dfd8;
+      border-radius: 99px;
+      height: 8px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-bar {
+      background: var(--wa-green);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    /* Control Panel */
+    .controls {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .list-filter-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .list-tabs {
+      display: flex;
+      background: #f0e9e2;
+      border-radius: 30px;
+      padding: 4px;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .list-tab-btn {
+      border: none;
+      background: transparent;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .list-tab-btn.active {
+      background: var(--wine);
+      color: #fff;
+    }
+
+    .sender-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sender-label {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--wine-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sender-switch {
+      display: flex;
+      background: #f0e9e2;
+      border-radius: 30px;
+      padding: 4px;
+      gap: 4px;
+    }
+    .sender-btn {
+      border: none;
+      background: transparent;
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .sender-btn.active {
+      background: var(--wine);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(115, 20, 43, 0.3);
+    }
+
+    .search-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-box input:focus { border-color: var(--wine); }
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: var(--text-muted);
+    }
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .pill:hover { border-color: var(--wine); color: var(--wine); }
+    .pill.active { background: var(--wine); color: #fff; border-color: var(--wine); }
+
+    .action-tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 8px;
+    }
+    .btn-tool {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-tool:hover {
+      background: #f7f3ee;
+      border-color: var(--wine);
+      color: var(--wine);
+    }
+
+    /* Guest Cards Grid */
+    .guest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 16px;
+    }
+    .guest-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--border);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .guest-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: var(--wine-light);
+    }
+    .guest-card.sent {
+      background: #fcfefc;
+      border-color: #a8d5b5;
+    }
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .guest-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .guest-id {
+      background: var(--wine);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+    .guest-name {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+    .card-badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .badge-sent {
+      background: #e6f7ec;
+      color: #1e7e34;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .badge-phone-none {
+      background: #fff3cd;
+      color: #856404;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+    .badge-tag-group {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+    .badge-tag-group.ziara { background: #fce7f3; color: #9d174d; }
+    .badge-tag-group.linus { background: #ede9fe; color: #5b21b6; }
+
+    .guest-details-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      background: #faf6f2;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .detail-item strong { color: var(--text); }
+    .plazas-badge {
+      background: var(--wine);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .link-preview {
+      font-size: 0.75rem;
+      color: var(--wine);
+      background: #fff;
+      border: 1px dashed var(--border);
+      padding: 6px 10px;
+      border-radius: 6px;
+      word-break: break-all;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .link-preview a {
+      color: var(--wine);
+      text-decoration: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .link-preview a:hover { text-decoration: underline; }
+
+    /* Action Buttons inside Card */
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: auto;
+    }
+    .btn-wa {
+      background: var(--wa-green);
+      color: #fff;
+      border: none;
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-wa:hover {
+      background: var(--wa-green-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(37, 211, 102, 0.4);
+    }
+    .btn-wa.disabled {
+      background: #ccd0d5;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    .secondary-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .btn-sub {
+      background: #f7f3ee;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 7px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.15s;
+    }
+    .btn-sub:hover {
+      background: #ece3d8;
+      border-color: var(--wine);
+      color: var(--wine);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #f0e9e2;
+      padding-top: 8px;
+      margin-top: 4px;
+    }
+    .toggle-sent-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+    .toggle-sent-label input {
+      accent-color: #1e7e34;
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Modal Message Preview */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+      backdrop-filter: blur(3px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 14px;
+      max-width: 540px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--wine);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0 4px;
+    }
+    .message-box {
+      background: #fdfaf6;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 0.93rem;
+      white-space: pre-wrap;
+      line-height: 1.55;
+      color: #333;
+      margin-bottom: 16px;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #2c2523;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 650px) {
+      h1 { font-size: 1.7rem; }
+      .header-content { padding: 0; }
+      .controls { padding: 14px; }
+      .sender-toggle-row { flex-direction: column; align-items: flex-start; }
+      .guest-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="header-tagline">Nuestra Boda · 7 de Noviembre de 2026</div>
+    <h1>Gestor de Invitaciones · Linus & Ziara</h1>
+    <p class="subtitle">Panel de control y generador de mensajes directos para WhatsApp</p>
+    <div class="nav-shortcuts">
+      <a href="index.html" class="nav-link-btn" target="_blank">💌 Ver Invitación Web ↗</a>
+      <a href="confirmaciones.html" class="nav-link-btn">📋 Ver Control de Asistencia y Confirmaciones ↗</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number" id="statTotal">53</div>
+      <div class="stat-label">Invitados en Lista</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="statPlazas">54</div>
+      <div class="stat-label">Plazas Reservadas</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="statEnviados" style="color: #1e7e34;">0</div>
+      <div class="stat-label">Invitaciones Enviadas</div>
+      <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="statPendientes" style="color: #d97706;">53</div>
+      <div class="stat-label">Pendientes por Enviar</div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="list-filter-row">
+      <div style="font-weight:700; font-size:0.92rem; color:var(--wine-dark);">
+        📁 Ver Lista de:
+      </div>
+      <div class="list-tabs">
+        <button class="list-tab-btn active" data-group="all" onclick="setListGroup('all')">
+          💍 Todos (<span id="countGrpAll">53</span>)
+        </button>
+        <button class="list-tab-btn" data-group="ziara" onclick="setListGroup('ziara')">
+          🌸 Ziara (<span id="countGrpZiara">23</span>)
+        </button>
+        <button class="list-tab-btn" data-group="linus" onclick="setListGroup('linus')">
+          🤵 Linus (<span id="countGrpLinus">30</span>)
+        </button>
+      </div>
+    </div>
+
+    <div class="sender-toggle-row">
+      <div class="sender-label">
+        <span>💌 ¿Quién envía el mensaje?</span>
+      </div>
+      <div class="sender-switch">
+        <button type="button" class="sender-btn active" id="btnSenderLinus" onclick="setSender('linus')">
+          🤵 Envía Linus ("¡Ziara y yo nos casamos!")
+        </button>
+        <button type="button" class="sender-btn" id="btnSenderZiara" onclick="setSender('ziara')">
+          👰 Envía Ziara ("¡Linus y yo nos casamos!")
+        </button>
+      </div>
+    </div>
+
+    <div class="search-filter-row">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Buscar por nombre o teléfono..." oninput="filterGuests()">
+      </div>
+      <div class="filter-pills">
+        <button class="pill active" data-filter="all" onclick="setFilter('all')">Todos (<span id="countAll">53</span>)</button>
+        <button class="pill" data-filter="pending" onclick="setFilter('pending')">Pendientes (<span id="countPending">53</span>)</button>
+        <button class="pill" data-filter="sent" onclick="setFilter('sent')">Enviados (<span id="countSent">0</span>)</button>
+        <button class="pill" data-filter="has_phone" onclick="setFilter('has_phone')">Con WhatsApp (<span id="countPhone">46</span>)</button>
+        <button class="pill" data-filter="no_phone" onclick="setFilter('no_phone')">Sin teléfono (<span id="countNoPhone">7</span>)</button>
+      </div>
+    </div>
+
+    <div class="action-tools-row">
+      <button class="btn-tool" onclick="copyAllLinks()">🔗 Copiar todos los enlaces</button>
+      <button class="btn-tool" onclick="exportCSV()">📥 Descargar en Excel / CSV</button>
+      <button class="btn-tool" onclick="addNewGuestPrompt()">➕ Agregar invitado</button>
+      <button class="btn-tool" onclick="resetAllData()" style="color:#b91c1c; margin-left:auto;">🔄 Reiniciar estados</button>
+    </div>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="guest-grid" id="guestGrid">
+    <!-- Generated by JS -->
+  </div>
+</div>
+
+<!-- Modal Preview -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-title">
+      <span id="modalGuestTitle">Mensaje preparado</span>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="message-box" id="modalMessageText"></div>
+    <div class="modal-actions">
+      <button class="btn-sub" onclick="copyModalMessage()">📋 Copiar mensaje</button>
+      <a id="modalWaBtn" href="#" target="_blank" class="btn-wa" style="padding: 8px 16px; font-size: 0.88rem;">
+        💬 Abrir en WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">Texto copiado al portapapeles</div>
+
+<script>
+const INITIAL_GUESTS = [{"id": 101, "list_num": "1", "name": "Zairys Ortiz", "greeting": "Zairys", "phone": "", "wa": "", "personas": 1, "group": "ziara", "note": ""}, {"id": 102, "list_num": "2", "name": "Ziarys Franco", "greeting": "Ziarys", "phone": "+1 (829) 327-9472", "wa": "18293279472", "personas": 1, "group": "ziara", "note": ""}, {"id": 103, "list_num": "3", "name": "Miguel Franco (Hermano)", "greeting": "Miguel", "link_name": "Miguel Franco", "phone": "+1 (809) 820-7547", "wa": "18098207547", "personas": 1, "group": "ziara", "note": "Hermano"}, {"id": 104, "list_num": "4", "name": "Miguel Franco", "greeting": "Miguel", "phone": "+1 (849) 861-7424", "wa": "18498617424", "personas": 1, "group": "ziara", "note": ""}, {"id": 105, "list_num": "5", "name": "Yanela Ortiz", "greeting": "Yanela", "phone": "", "wa": "", "personas": 1, "group": "ziara", "note": ""}, {"id": 106, "list_num": "6", "name": "Angela Ortiz", "greeting": "Angela", "phone": "+1 (849) 431-4493", "wa": "18494314493", "personas": 1, "group": "ziara", "note": ""}, {"id": 107, "list_num": "7", "name": "Saul Ortiz", "greeting": "Saul", "phone": "+1 (809) 250-9989", "wa": "18092509989", "personas": 1, "group": "ziara", "note": ""}, {"id": 108, "list_num": "8", "name": "Jonny Franco (Tío)", "greeting": "Jonny", "link_name": "Jonny Franco", "phone": "+1 (829) 440-9174", "wa": "18294409174", "personas": 1, "group": "ziara", "note": "Comparte teléfono con Jonny Franco primo"}, {"id": 109, "list_num": "9", "name": "Jonny Franco (Primo)", "greeting": "Jonny", "link_name": "Jonny Franco", "phone": "+1 (829) 440-9174", "wa": "18294409174", "personas": 1, "group": "ziara", "note": "Comparte teléfono con Jonny Franco tío"}, {"id": 110, "list_num": "10", "name": "Dineidi Moreno", "greeting": "Dineidi", "phone": "+1 (829) 262-3338", "wa": "18292623338", "personas": 1, "group": "ziara", "note": "Comparte teléfono con Dircia Moreno"}, {"id": 111, "list_num": "11", "name": "Dircia Moreno", "greeting": "Dircia", "phone": "+1 (829) 262-3338", "wa": "18292623338", "personas": 1, "group": "ziara", "note": "Comparte teléfono con Dineidi Moreno"}, {"id": 112, "list_num": "12", "name": "Diana Vallejo (Carola)", "greeting": "Diana", "link_name": "Diana Vallejo", "phone": "+1 (829) 722-4935", "wa": "18297224935", "personas": 1, "group": "ziara", "note": "Carola"}, {"id": 113, "list_num": "13-14", "name": "Ana Olivares y esposo", "greeting": "Ana", "link_name": "Ana Olivares y esposo", "phone": "+1 (809) 940-1441", "wa": "18099401441", "personas": 2, "group": "ziara", "note": "Plazas reservadas: 2 personas"}, {"id": 115, "list_num": "15", "name": "Anthony Hernandez", "greeting": "Anthony", "phone": "+1 (829) 722-3674", "wa": "18297223674", "personas": 1, "group": "ziara", "note": ""}, {"id": 116, "list_num": "16", "name": "Vanessa Gutierrez", "greeting": "Vanessa", "phone": "+1 (809) 866-9902", "wa": "18098669902", "personas": 1, "group": "ziara", "note": ""}, {"id": 117, "list_num": "17", "name": "Lia Custodio", "greeting": "Lia", "phone": "+1 (809) 868-5984", "wa": "18098685984", "personas": 1, "group": "ziara", "note": ""}, {"id": 118, "list_num": "18", "name": "Lory Encarnación", "greeting": "Lory", "phone": "+1 (829) 722-2966", "wa": "18297222966", "personas": 1, "group": "ziara", "note": ""}, {"id": 119, "list_num": "19", "name": "Jeniffer Sierra", "greeting": "Jeniffer", "phone": "+1 (809) 470-2708", "wa": "18094702708", "personas": 1, "group": "ziara", "note": ""}, {"id": 120, "list_num": "20", "name": "Ysmeilin Dipré", "greeting": "Ysmeilin", "phone": "+1 (809) 322-0084", "wa": "18093220084", "personas": 1, "group": "ziara", "note": ""}, {"id": 121, "list_num": "21", "name": "Yokeini Guzman", "greeting": "Yokeini", "phone": "+1 (829) 828-6962", "wa": "18298286962", "personas": 1, "group": "ziara", "note": ""}, {"id": 122, "list_num": "22", "name": "Maria Bautista", "greeting": "Maria", "phone": "", "wa": "", "personas": 1, "group": "ziara", "note": ""}, {"id": 123, "list_num": "23", "name": "Zaima", "greeting": "Zaima", "phone": "+1 (224) 247-7118", "wa": "12242477118", "personas": 1, "group": "ziara", "note": "EE. UU."}, {"id": 124, "list_num": "24", "name": "Neidy Reyes", "greeting": "Neidy", "phone": "+1 (829) 382-0611", "wa": "18293820611", "personas": 1, "group": "ziara", "note": ""}, {"id": 1, "list_num": "1", "name": "Moreno Aquino", "greeting": "Moreno", "phone": "809-714-1816", "wa": "18097141816", "personas": 1, "group": "linus", "note": ""}, {"id": 2, "list_num": "2", "name": "Guarin Aquino", "greeting": "Guarin", "phone": "829-684-8921", "wa": "18296848921", "personas": 1, "group": "linus", "note": ""}, {"id": 3, "list_num": "3", "name": "Daty Nidian Aquino", "greeting": "Daty Nidian", "phone": "829-358-4005", "wa": "18293584005", "personas": 1, "group": "linus", "note": ""}, {"id": 4, "list_num": "4", "name": "Caco Aquino / Luis Alexander", "greeting": "Caco", "link_name": "Luis Alexander Aquino", "phone": "829-425-3775", "wa": "18294253775", "personas": 1, "group": "linus", "note": ""}, {"id": 5, "list_num": "5", "name": "Ciprian Aquino", "greeting": "Ciprian", "phone": "849-316-3405", "wa": "18493163405", "personas": 1, "group": "linus", "note": ""}, {"id": 6, "list_num": "6", "name": "Mariola Aquino", "greeting": "Mariola", "phone": "829-208-3786", "wa": "18292083786", "personas": 1, "group": "linus", "note": ""}, {"id": 7, "list_num": "7", "name": "Jose Aquino", "greeting": "Jose", "phone": "809-964-5963", "wa": "18099645963", "personas": 1, "group": "linus", "note": ""}, {"id": 8, "list_num": "8", "name": "Francisco Aquino", "greeting": "Francisco", "phone": "829-805-2366", "wa": "18298052366", "personas": 1, "group": "linus", "note": ""}, {"id": 9, "list_num": "9", "name": "Daniel Aquino", "greeting": "Daniel", "phone": "809-297-2037", "wa": "18092972037", "personas": 1, "group": "linus", "note": ""}, {"id": 10, "list_num": "10", "name": "Manuel Aquino", "greeting": "Manuel", "phone": "829-894-6568", "wa": "18298946568", "personas": 1, "group": "linus", "note": ""}, {"id": 11, "list_num": "11", "name": "Mirciades Aquino", "greeting": "Mirciades", "phone": "849-497-4621", "wa": "18494974621", "personas": 1, "group": "linus", "note": ""}, {"id": 12, "list_num": "12", "name": "Moises Abraham Chean Saviñon", "greeting": "Moises", "phone": "809-980-7682", "wa": "18099807682", "personas": 1, "group": "linus", "note": ""}, {"id": 13, "list_num": "13", "name": "Hestor Aquino", "greeting": "Hestor", "phone": "809-313-2240", "wa": "18093132240", "personas": 1, "group": "linus", "note": ""}, {"id": 14, "list_num": "14", "name": "Mari Rosario", "greeting": "Mari", "phone": "809-899-2055", "wa": "18098992055", "personas": 1, "group": "linus", "note": ""}, {"id": 15, "list_num": "15", "name": "Osvaldo Perdomo", "greeting": "Osvaldo", "phone": "829-494-9037", "wa": "18294949037", "personas": 1, "group": "linus", "note": ""}, {"id": 16, "list_num": "16", "name": "Niolvania Aquino", "greeting": "Niolvania", "phone": "829-205-5776", "wa": "18292055776", "personas": 1, "group": "linus", "note": ""}, {"id": 17, "list_num": "17", "name": "Lars Salathe", "greeting": "Lars", "phone": "829-440-1946", "wa": "18294401946", "personas": 1, "group": "linus", "note": ""}, {"id": 18, "list_num": "18", "name": "Leo Salathe", "greeting": "Leo", "phone": "41.98 30270 07", "wa": "41983027007", "personas": 1, "group": "linus", "note": "Posible móvil suizo +41 78 302 70 07"}, {"id": 19, "list_num": "19", "name": "Lucas Salathe", "greeting": "Lucas", "phone": "", "wa": "", "personas": 1, "group": "linus", "note": ""}, {"id": 20, "list_num": "20", "name": "Yojarlin", "greeting": "Yojarlin", "phone": "", "wa": "", "personas": 1, "group": "linus", "note": ""}, {"id": 21, "list_num": "21", "name": "Heidy Aquino", "greeting": "Heidy", "phone": "809-783-6618", "wa": "18097836618", "personas": 1, "group": "linus", "note": ""}, {"id": 22, "list_num": "22", "name": "Junior Aquino", "greeting": "Junior", "phone": "829-520-7169", "wa": "18295207169", "personas": 1, "group": "linus", "note": ""}, {"id": 23, "list_num": "23", "name": "Jhenison Aquino", "greeting": "Jhenison", "phone": "809-460-5356", "wa": "18094605356", "personas": 1, "group": "linus", "note": ""}, {"id": 24, "list_num": "24", "name": "Maridalis Aquino", "greeting": "Maridalis", "phone": "849-206-1098", "wa": "18492061098", "personas": 1, "group": "linus", "note": ""}, {"id": 25, "list_num": "25", "name": "Diego Aquino (Kiña)", "greeting": "Diego", "link_name": "Diego Aquino", "phone": "809-396-3554", "wa": "18093963554", "personas": 1, "group": "linus", "note": ""}, {"id": 26, "list_num": "26", "name": "Yulisa Aquino", "greeting": "Yulisa", "phone": "829-936-0413", "wa": "18299360413", "personas": 1, "group": "linus", "note": ""}, {"id": 27, "list_num": "27", "name": "Marian", "greeting": "Marian", "phone": "829-444-6226", "wa": "18294446226", "personas": 1, "group": "linus", "note": ""}, {"id": 28, "list_num": "28", "name": "Victoria", "greeting": "Victoria", "phone": "829-505-3926", "wa": "18295053926", "personas": 1, "group": "linus", "note": ""}, {"id": 29, "list_num": "29", "name": "Novia de Leo", "greeting": "Amiga", "phone": "", "wa": "", "personas": 1, "group": "linus", "note": "Puede unirse con Leo (2 plazas)"}, {"id": 30, "list_num": "30", "name": "Esposa de Yojarlin", "greeting": "Amiga", "phone": "", "wa": "", "personas": 1, "group": "linus", "note": "Puede unirse con Yojarlin (2 plazas)"}];
+
+const BASE_INVITE_URL = 'https://luckyone69.github.io/invitacion-linus-ziara/';
+const STORAGE_KEY = 'linus_ziara_wedding_guests_v2';
+
+let guests = [];
+let currentSender = 'linus';
+let currentGroupFilter = 'all';
+let currentFilter = 'all';
+let currentSearch = '';
+
+function loadGuests() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      guests = JSON.parse(saved);
+    } catch (e) {
+      guests = JSON.parse(JSON.stringify(INITIAL_GUESTS));
+    }
+  } else {
+    guests = JSON.parse(JSON.stringify(INITIAL_GUESTS));
+  }
+  guests.forEach(g => {
+    if (g.sent === undefined) g.sent = false;
+    if (g.personas === undefined) g.personas = 1;
+  });
+}
+
+function saveGuests() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
+  updateStats();
+}
+
+function getInviteLink(guest) {
+  const nameToUse = guest.link_name || guest.name;
+  return BASE_INVITE_URL + '?para=' + encodeURIComponent(nameToUse) + '&personas=' + guest.personas;
+}
+
+function generateMessage(guest) {
+  const link = getInviteLink(guest);
+  const greetingName = guest.greeting || guest.name.split(' ')[0] || 'amigo/a';
+  const plazas = guest.personas || 1;
+  const isMultiple = plazas > 1;
+
+  let senderLine = '';
+  let closing = '';
+
+  // If viewing Ziara's list, default sender can be Ziara
+  if (currentSender === 'linus') {
+    senderLine = '¡Ziara y yo nos casamos!';
+    closing = 'Con cariño,\nLinus y Ziara';
+  } else {
+    senderLine = '¡Linus y yo nos casamos!';
+    closing = 'Con cariño,\nZiara y Linus';
+  }
+
+  const enthusiasm = isMultiple
+    ? 'Me hace mucha ilusión compartir con ustedes una noticia muy especial: ' + senderLine + ' Nos encantaría que estuvieran con nosotros para celebrar este día con cariño y alegría.'
+    : 'Me hace mucha ilusión compartir contigo una noticia muy especial: ' + senderLine + ' Me encantaría que estuvieras con nosotros para celebrar este día con cariño y alegría.';
+
+  const linkDetails = isMultiple
+    ? 'En el enlace pueden ver los detalles y confirmar su asistencia. Por favor, confirmen antes del 20 de octubre.'
+    : 'En el enlace puedes ver los detalles y confirmar tu asistencia. Por favor, confirma antes del 20 de octubre.';
+
+  const hope = isMultiple
+    ? '¡Esperamos que puedan acompañarnos!'
+    : '¡Espero que puedas acompañarnos!';
+
+  const text =
+    '¡Hola, ' + greetingName + '!\n\n' +
+    enthusiasm + '\n\n' +
+    'La boda será el sábado 7 de noviembre de 2026, a las 4:20 p. m.\n\n' +
+    link + '\n\n' +
+    linkDetails + ' ' + hope + '\n\n' +
+    closing;
+
+  return text;
+}
+
+function getWhatsAppUrl(guest) {
+  if (!guest.wa) return null;
+  const text = generateMessage(guest);
+  return 'https://wa.me/' + guest.wa + '?text=' + encodeURIComponent(text);
+}
+
+function setSender(sender) {
+  currentSender = sender;
+  document.getElementById('btnSenderLinus').classList.toggle('active', sender === 'linus');
+  document.getElementById('btnSenderZiara').classList.toggle('active', sender === 'ziara');
+  renderCards();
+  showToast('Remitente: ' + (sender === 'linus' ? 'Linus' : 'Ziara'));
+}
+
+function setListGroup(grp) {
+  currentGroupFilter = grp;
+  document.querySelectorAll('.list-tab-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-group') === grp);
+  });
+  if (grp === 'ziara') {
+    setSender('ziara');
+  } else if (grp === 'linus') {
+    setSender('linus');
+  }
+  updateStats();
+  renderCards();
+}
+
+function setFilter(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-pills .pill').forEach(p => {
+    p.classList.toggle('active', p.getAttribute('data-filter') === filter);
+  });
+  renderCards();
+}
+
+function filterGuests() {
+  currentSearch = document.getElementById('searchInput').value.trim().toLowerCase();
+  renderCards();
+}
+
+function updateStats() {
+  const filteredList = guests.filter(g => currentGroupFilter === 'all' || g.group === currentGroupFilter);
+  const total = filteredList.length;
+  const plazas = filteredList.reduce((acc, g) => acc + (parseInt(g.personas,10) || 1), 0);
+  const sent = filteredList.filter(g => g.sent).length;
+  const pending = total - sent;
+  const withPhone = filteredList.filter(g => g.wa).length;
+  const withoutPhone = total - withPhone;
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statPlazas').textContent = plazas;
+  document.getElementById('statEnviados').textContent = sent;
+  document.getElementById('statPendientes').textContent = pending;
+
+  const pct = total > 0 ? Math.round((sent / total) * 100) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+
+  document.getElementById('countAll').textContent = total;
+  document.getElementById('countPending').textContent = pending;
+  document.getElementById('countSent').textContent = sent;
+  document.getElementById('countPhone').textContent = withPhone;
+  document.getElementById('countNoPhone').textContent = withoutPhone;
+
+  document.getElementById('countGrpAll').textContent = guests.length;
+  document.getElementById('countGrpZiara').textContent = guests.filter(g => g.group === 'ziara').length;
+  document.getElementById('countGrpLinus').textContent = guests.filter(g => g.group === 'linus').length;
+}
+
+function renderCards() {
+  const container = document.getElementById('guestGrid');
+  container.innerHTML = '';
+
+  const filtered = guests.filter(g => {
+    if (currentGroupFilter !== 'all' && g.group !== currentGroupFilter) return false;
+
+    if (currentFilter === 'pending' && g.sent) return false;
+    if (currentFilter === 'sent' && !g.sent) return false;
+    if (currentFilter === 'has_phone' && !g.wa) return false;
+    if (currentFilter === 'no_phone' && g.wa) return false;
+
+    if (currentSearch) {
+      const matchName = g.name.toLowerCase().includes(currentSearch);
+      const matchPhone = (g.phone || '').toLowerCase().includes(currentSearch);
+      const matchGreeting = (g.greeting || '').toLowerCase().includes(currentSearch);
+      if (!matchName && !matchPhone && !matchGreeting) return false;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">No se encontraron invitados con estos criterios.</div>';
+    return;
+  }
+
+  filtered.forEach(guest => {
+    const card = document.createElement('div');
+    card.className = 'guest-card' + (guest.sent ? ' sent' : '');
+    card.id = 'card-' + guest.id;
+
+    const waUrl = getWhatsAppUrl(guest);
+    const link = getInviteLink(guest);
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="guest-meta">
+          <span class="guest-id">#${guest.list_num || guest.id}</span>
+          <span class="guest-name">${escapeHtml(guest.name)}</span>
+        </div>
+        <div class="card-badges">
+          <span class="badge-tag-group ${guest.group}">${guest.group === 'ziara' ? '🌸 Ziara' : '🤵 Linus'}</span>
+          ${guest.sent ? '<span class="badge-sent">✓ Enviado</span>' : ''}
+          ${!guest.wa ? '<span class="badge-phone-none">Sin teléfono</span>' : ''}
+        </div>
+      </div>
+
+      <div class="guest-details-row">
+        <div class="detail-item">
+          <span>📞</span>
+          <strong>${guest.phone ? escapeHtml(guest.phone) : 'No indicado'}</strong>
+        </div>
+        <div class="detail-item">
+          <span>🎟️</span>
+          <span>Plazas:</span>
+          <span class="plazas-badge" title="Haz clic para cambiar plazas" onclick="changePlazas(${guest.id})" style="cursor:pointer;">
+            ${guest.personas || 1} ${guest.personas === 1 ? 'persona' : 'personas'} ✏️
+          </span>
+        </div>
+        <div class="detail-item">
+          <span>👋 Saludo:</span>
+          <strong>${escapeHtml(guest.greeting || '')}</strong>
+        </div>
+        ${guest.note ? `<div style="width:100%; font-size:0.75rem; color:#856404;">ℹ️ ${escapeHtml(guest.note)}</div>` : ''}
+      </div>
+
+      <div class="link-preview">
+        <a href="${link}" target="_blank" title="Abrir invitación en nueva pestaña">${link}</a>
+        <button class="btn-sub" style="padding: 2px 6px; font-size: 0.7rem;" onclick="copyText('${link}', 'Enlace copiado')">Copiar</button>
+      </div>
+
+      <div class="card-actions">
+        ${guest.wa ? `
+          <a href="${waUrl}" target="_blank" class="btn-wa" onclick="markSentOnWhatsApp(${guest.id})">
+            <span>💬 Abrir WhatsApp</span>
+          </a>
+        ` : `
+          <button class="btn-wa disabled" onclick="handleNoPhoneAction(${guest.id})">
+            <span>⚠️ Sin teléfono (Copiar mensaje)</span>
+          </button>
+        `}
+
+        <div class="secondary-actions">
+          <button class="btn-sub" onclick="copyGuestMessage(${guest.id})">📋 Copiar texto</button>
+          <button class="btn-sub" onclick="previewGuestMessage(${guest.id})">👁️ Ver mensaje</button>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <label class="toggle-sent-label">
+          <input type="checkbox" ${guest.sent ? 'checked' : ''} onchange="toggleSent(${guest.id}, this.checked)">
+          <span>Marcar como enviado</span>
+        </label>
+        <button class="btn-sub" style="padding: 2px 8px; font-size: 0.72rem;" onclick="editGuest(${guest.id})">Editar datos</button>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function toggleSent(id, isSent) {
+  const g = guests.find(x => x.id === id);
+  if (g) {
+    g.sent = isSent;
+    saveGuests();
+    renderCards();
+    showToast(isSent ? 'Invitación #' + (g.list_num || id) + ' marcada como enviada' : 'Invitación desmarcada');
+  }
+}
+
+function markSentOnWhatsApp(id) {
+  const g = guests.find(x => x.id === id);
+  if (g && !g.sent) {
+    g.sent = true;
+    saveGuests();
+    setTimeout(renderCards, 500);
+  }
+}
+
+function changePlazas(id) {
+  const g = guests.find(x => x.id === id);
+  if (!g) return;
+  const current = g.personas || 1;
+  const input = prompt('Indica las plazas reservadas para ' + g.name + ':', current);
+  if (input !== null) {
+    const num = parseInt(input.trim(), 10);
+    if (!isNaN(num) && num >= 1 && num <= 20) {
+      g.personas = num;
+      saveGuests();
+      renderCards();
+      showToast('Plazas actualizadas a ' + num);
+    } else {
+      alert('Por favor introduce un número válido entre 1 y 20.');
+    }
+  }
+}
+
+function editGuest(id) {
+  const g = guests.find(x => x.id === id);
+  if (!g) return;
+  const name = prompt('Nombre completo:', g.name);
+  if (name === null) return;
+  const greeting = prompt('Nombre en el saludo (ej: Moreno / Zairys):', g.greeting || '');
+  if (greeting === null) return;
+  const phone = prompt('Teléfono (ej: 809-714-1816 o vacío):', g.phone || '');
+  if (phone === null) return;
+
+  g.name = name.trim();
+  g.greeting = greeting.trim();
+  g.phone = phone.trim();
+
+  const clean = g.phone.replace(/\D/g, '');
+  if (clean.startsWith('809') || clean.startsWith('829') || clean.startsWith('849')) {
+    g.wa = '1' + clean;
+  } else if (clean.length >= 10) {
+    g.wa = clean;
+  } else {
+    g.wa = '';
+  }
+
+  saveGuests();
+  renderCards();
+  showToast('Invitado actualizado');
+}
+
+function addNewGuestPrompt() {
+  const name = prompt('Nombre del nuevo invitado:');
+  if (!name || !name.trim()) return;
+  const phone = prompt('Teléfono (opcional):', '') || '';
+  const plazasStr = prompt('Plazas reservadas:', '1') || '1';
+  const plazas = parseInt(plazasStr, 10) || 1;
+
+  const nextId = guests.length > 0 ? Math.max(...guests.map(g => g.id)) + 1 : 1;
+  const clean = phone.replace(/\D/g, '');
+  let wa = '';
+  if (clean.startsWith('809') || clean.startsWith('829') || clean.startsWith('849')) {
+    wa = '1' + clean;
+  } else if (clean) {
+    wa = clean;
+  }
+
+  const newG = {
+    id: nextId,
+    list_num: String(nextId),
+    name: name.trim(),
+    greeting: name.trim().split(' ')[0],
+    phone: phone.trim(),
+    wa: wa,
+    personas: plazas,
+    group: currentGroupFilter === 'ziara' ? 'ziara' : 'linus',
+    sent: false
+  };
+
+  guests.push(newG);
+  saveGuests();
+  renderCards();
+  showToast('Invitado agregado con éxito');
+}
+
+function handleNoPhoneAction(id) {
+  const g = guests.find(x => x.id === id);
+  if (!g) return;
+  copyGuestMessage(id);
+  alert('Este invitado (' + g.name + ') no tiene número registrado.\n\n¡El mensaje ya ha sido copiado a tu portapapeles! Puedes pegarlo directamente en su chat.');
+}
+
+function copyGuestMessage(id) {
+  const g = guests.find(x => x.id === id);
+  if (!g) return;
+  const msg = generateMessage(g);
+  navigator.clipboard.writeText(msg).then(() => {
+    showToast('Mensaje de ' + g.name + ' copiado');
+  });
+}
+
+function previewGuestMessage(id) {
+  const g = guests.find(x => x.id === id);
+  if (!g) return;
+  const msg = generateMessage(g);
+  document.getElementById('modalGuestTitle').textContent = 'Mensaje para: ' + g.name;
+  document.getElementById('modalMessageText').textContent = msg;
+
+  const waBtn = document.getElementById('modalWaBtn');
+  if (g.wa) {
+    waBtn.style.display = 'inline-flex';
+    waBtn.href = getWhatsAppUrl(g);
+    waBtn.onclick = () => markSentOnWhatsApp(g.id);
+  } else {
+    waBtn.style.display = 'none';
+  }
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+}
+
+function copyModalMessage() {
+  const text = document.getElementById('modalMessageText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Mensaje copiado al portapapeles');
+  });
+}
+
+function copyText(text, toastMsg) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(toastMsg || 'Copiado al portapapeles');
+  });
+}
+
+function copyAllLinks() {
+  const list = guests.filter(g => currentGroupFilter === 'all' || g.group === currentGroupFilter);
+  const lines = list.map(g => `${g.list_num || g.id}. ${g.name} (${g.personas || 1} p): ${getInviteLink(g)}`);
+  navigator.clipboard.writeText(lines.join('\n')).then(() => {
+    showToast('Se copiaron ' + list.length + ' enlaces al portapapeles');
+  });
+}
+
+function exportCSV() {
+  const list = guests.filter(g => currentGroupFilter === 'all' || g.group === currentGroupFilter);
+  const headers = ['ID', 'Lista', 'Nombre', 'Saludo', 'Telefono', 'Plazas', 'Estado', 'Enlace_Invitacion'];
+  const rows = list.map(g => [
+    g.list_num || g.id,
+    g.group,
+    `"${g.name.replace(/"/g, '""')}"`,
+    `"${(g.greeting || '').replace(/"/g, '""')}"`,
+    `"${g.phone || ''}"`,
+    g.personas || 1,
+    g.sent ? 'Enviado' : 'Pendiente',
+    `"${getInviteLink(g)}"`
+  ]);
+
+  const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'invitados_boda_linus_ziara.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  showToast('Archivo CSV descargado con éxito');
+}
+
+function resetAllData() {
+  if (confirm('¿Estás seguro de que deseas reiniciar todos los estados y volver a la lista original?')) {
+    localStorage.removeItem(STORAGE_KEY);
+    loadGuests();
+    renderCards();
+    updateStats();
+    showToast('Datos reiniciados a los valores iniciales');
+  }
+}
+
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    el.classList.remove('show');
+  }, 2500);
+}
+
+// Init
+loadGuests();
+updateStats();
+renderCards();
+</script>
+
+</body>
+</html>
