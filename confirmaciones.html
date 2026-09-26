@@ -3,1209 +3,1128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Control de Asistencia · Linus & Ziara</title>
+  <title>Asistencia · Linus & Ziara</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
   <style>
     :root {
       --wine: #73142b;
-      --wine-dark: #4a0c1a;
-      --wine-light: #94203c;
-      --gold: #c59b27;
-      --gold-light: #f7edcf;
-      --gold-border: #e6c875;
-      --bg: #f9f6f1;
-      --card-bg: #ffffff;
-      --text: #2c2523;
-      --text-muted: #6e6461;
-      --border: #e6ded7;
-      --green: #2e7d32;
-      --green-light: #e8f5e9;
-      --green-border: #a5d6a7;
-      --yellow: #b45309;
-      --yellow-light: #fef3c7;
-      --yellow-border: #fde68a;
-      --red: #c62828;
-      --red-light: #ffebee;
-      --red-border: #ef9a9a;
-      --wa-green: #25D366;
-      --wa-green-dark: #128C7E;
-      --shadow-sm: 0 2px 6px rgba(0,0,0,0.04);
-      --shadow: 0 4px 16px rgba(115, 20, 43, 0.08);
-      --shadow-hover: 0 8px 24px rgba(115, 20, 43, 0.14);
-      --radius: 14px;
+      --wine-dark: #490a19;
+      --wine-subtle: #fcf1f3;
+      --gold: #b38b22;
+      --gold-light: #fef8e7;
+      --bg: #f8f6f2;
+      --surface: #ffffff;
+      --text: #1d1918;
+      --text-muted: #736b67;
+      --border: #ede6df;
+      --border-subtle: #f3ede7;
+      --green: #1b873f;
+      --green-bg: #eaf7ee;
+      --amber: #b45309;
+      --amber-bg: #fff8eb;
+      --red: #c92a2a;
+      --red-bg: #fdf0f0;
+      --wa: #25D366;
+      --wa-dark: #128C7E;
+      --shadow-card: 0 3px 12px rgba(45, 25, 20, 0.05);
+      --radius: 16px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
-      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
-      padding-bottom: 100px;
+      line-height: 1.45;
+      padding-bottom: 110px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Header */
-    header {
-      background: linear-gradient(135deg, var(--wine-dark) 0%, var(--wine) 100%);
+    /* Top App Bar */
+    .app-header {
+      background: var(--wine);
       color: #fff;
-      padding: 24px 16px 20px;
-      text-align: center;
+      padding: 14px 16px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 18px rgba(73, 10, 25, 0.25);
     }
-    .header-content {
-      max-width: 1200px;
+    .header-row {
+      max-width: 900px;
       margin: 0 auto;
-    }
-    .wedding-tag {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.05rem;
-      color: var(--gold-light);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-    h1 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
-      line-height: 1.2;
-    }
-    .subtitle {
-      font-size: 0.85rem;
-      color: #fbebee;
-      opacity: 0.92;
-    }
-    .nav-shortcuts {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .nav-link-btn {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.28);
-      color: #fff;
-      text-decoration: none;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.76rem;
-      font-weight: 600;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .nav-link-btn:hover, .nav-link-btn:active {
-      background: #fff;
-      color: var(--wine);
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 18px auto 0;
-      padding: 0 14px;
-    }
-
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-    .stat-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 12px 14px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      text-align: center;
-    }
-    .stat-val {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.9rem;
-      font-weight: 700;
-      line-height: 1;
-      margin-bottom: 2px;
-    }
-    .stat-lbl {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.3px;
-    }
-    .progress-bar-wrap {
-      background: #eee7e2;
-      border-radius: 99px;
-      height: 6px;
-      overflow: hidden;
-      margin-top: 6px;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      background: var(--green);
-      width: 0%;
-      transition: width 0.4s ease;
-    }
-
-    /* Controls Panel */
-    .controls-panel {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      padding: 16px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    /* Horizontal scrollable tabs for mobile */
-    .scrollable-tabs-wrap {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
     }
-    .group-tabs {
-      display: flex;
-      background: #f1eae4;
-      border-radius: 30px;
-      padding: 3px;
-      gap: 3px;
-      overflow-x: auto;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-      max-width: 100%;
-    }
-    .group-tab-btn {
-      border: none;
-      background: transparent;
-      padding: 7px 14px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--text-muted);
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
-    .group-tab-btn.active {
-      background: var(--wine);
-      color: #fff;
-      box-shadow: 0 2px 6px rgba(115,20,43,0.3);
-    }
-
-    .btn-add-guest {
-      background: var(--wine);
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.84rem;
+    .brand-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
       font-weight: 700;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .brand-sub {
+      font-size: 0.72rem;
+      color: #ffd9e2;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .git-status-badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 3px 8px rgba(115,20,43,0.25);
       transition: all 0.2s;
-      flex-shrink: 0;
     }
-    .btn-add-guest:hover, .btn-add-guest:active {
-      background: var(--wine-dark);
-      transform: translateY(-1px);
+    .git-status-badge.connected {
+      background: #eaf7ee;
+      color: var(--green);
+      border-color: #a3e0b5;
+    }
+    .git-status-badge.saving {
+      background: #fef8e7;
+      color: var(--amber);
+      border-color: #f7df94;
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
     }
 
-    .filter-search-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
+    /* Main Container */
+    .main-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 12px 14px 0;
     }
-    .search-input-wrap {
+
+    /* Compact Stat Ribbon */
+    .stat-ribbon {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-card);
+      padding: 12px 14px 10px;
+      margin-bottom: 12px;
+    }
+    .stat-cells {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      text-align: center;
+      gap: 4px;
+    }
+    .stat-cell .num {
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.1;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .stat-cell .lbl {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-top: 2px;
+    }
+    .ribbon-progress {
+      height: 5px;
+      background: #eee8e2;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .ribbon-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #1b873f, #25D366);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* Sticky Search & Filter Bar */
+    .filter-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    /* List Tabs (Ziara / Linus / Todos) */
+    .group-pills-bar {
+      display: flex;
+      background: #eee7e0;
+      padding: 3px;
+      border-radius: 30px;
+      gap: 3px;
+    }
+    .grp-btn {
       flex: 1;
-      min-width: 220px;
+      border: none;
+      background: transparent;
+      padding: 8px 6px;
+      border-radius: 24px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .grp-btn.active {
+      background: var(--surface);
+      color: var(--wine);
+      box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+    }
+
+    /* Search Box (iOS style) */
+    .search-row {
       position: relative;
     }
-    .search-input-wrap input {
+    .search-row input {
       width: 100%;
-      padding: 9px 12px 9px 36px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
+      padding: 10px 14px 10px 38px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       font-size: 0.88rem;
       font-family: inherit;
       outline: none;
+      box-shadow: var(--shadow-card);
       transition: border-color 0.2s;
     }
-    .search-input-wrap input:focus { border-color: var(--wine); }
-    .search-input-wrap svg {
+    .search-row input:focus { border-color: var(--wine); }
+    .search-row svg {
       position: absolute;
-      left: 10px;
+      left: 12px;
       top: 50%;
       transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
+      width: 17px;
+      height: 17px;
       stroke: var(--text-muted);
     }
 
-    .status-pills {
+    /* Status Filters (Swipeable horizontal pills) */
+    .status-scroll-bar {
       display: flex;
       gap: 6px;
       overflow-x: auto;
       white-space: nowrap;
       -webkit-overflow-scrolling: touch;
       padding-bottom: 2px;
-      max-width: 100%;
+      scrollbar-width: none;
     }
-    .status-pill {
+    .status-scroll-bar::-webkit-scrollbar { display: none; }
+    .pill-btn {
       border: 1px solid var(--border);
-      background: #fff;
-      padding: 6px 12px;
-      border-radius: 18px;
-      font-size: 0.78rem;
-      font-weight: 600;
+      background: var(--surface);
       color: var(--text-muted);
+      padding: 6px 13px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.15s;
       flex-shrink: 0;
     }
-    .status-pill:hover, .status-pill:active { border-color: var(--wine); color: var(--wine); }
-    .status-pill.active {
+    .pill-btn.active {
       background: var(--wine);
       color: #fff;
       border-color: var(--wine);
     }
 
-    .tools-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding-top: 8px;
-      border-top: 1px solid #f2ede8;
-    }
-    .btn-tool {
-      background: #fff;
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: all 0.2s;
-    }
-    .btn-tool:hover, .btn-tool:active {
-      background: #fbf7f4;
-      border-color: var(--wine);
-      color: var(--wine);
-    }
-
-    /* Guest Cards Grid */
-    .guests-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 16px;
-    }
-    .guest-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      border: 1.5px solid var(--border);
-      box-shadow: var(--shadow);
-      padding: 16px;
+    /* Guest Cards List */
+    .guests-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
+    }
+    .guest-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-card);
+      padding: 14px 16px;
       position: relative;
-      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      transition: all 0.2s;
+      border-left: 5px solid #d9d2cb;
     }
-    .guest-card:hover {
-      box-shadow: var(--shadow-hover);
-      border-color: #d1c1b8;
-    }
-    .guest-card.confirmed {
-      border-color: var(--green-border);
-      background: #fbfdfb;
-    }
-    .guest-card.declined {
-      border-color: var(--red-border);
-      background: #fffcfc;
-    }
+    .guest-card.confirmed { border-left-color: var(--green); }
+    .guest-card.pending { border-left-color: var(--amber); }
+    .guest-card.declined { border-left-color: var(--red); }
 
-    /* Card Header with Photo Avatar */
-    .card-person-header {
+    /* Top row inside card */
+    .card-top {
       display: flex;
+      align-items: center;
       gap: 12px;
-      align-items: flex-start;
     }
-    .avatar-wrap {
+    .avatar-box {
       position: relative;
       flex-shrink: 0;
       cursor: pointer;
     }
     .avatar-img {
-      width: 58px;
-      height: 58px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--gold-border);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       display: block;
-      background: #f4ede6;
+      border: 2px solid #ecd89c;
     }
-    .avatar-initials {
-      width: 58px;
-      height: 58px;
+    .avatar-mono {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
-      font-weight: 700;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      color: #fff;
-      border: 2px solid var(--gold-border);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      text-transform: uppercase;
-      user-select: none;
+      font-weight: 800;
+      font-size: 1.15rem;
+      font-family: 'Playfair Display', Georgia, serif;
+      border: 2px solid #ecd89c;
     }
-    .avatar-camera-badge {
+    .avatar-cam-badge {
       position: absolute;
-      bottom: -2px;
-      right: -2px;
+      bottom: -3px;
+      right: -3px;
       background: var(--wine);
       color: #fff;
-      width: 22px;
-      height: 22px;
+      width: 19px;
+      height: 19px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       border: 2px solid #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
     }
 
-    .person-info {
+    .card-info {
       flex: 1;
       min-width: 0;
     }
-    .person-top-meta {
+    .card-meta-line {
       display: flex;
       align-items: center;
       gap: 5px;
       margin-bottom: 2px;
       flex-wrap: wrap;
     }
-    .badge-group {
-      font-size: 0.68rem;
+    .tag-chip {
+      font-size: 0.65rem;
       font-weight: 700;
-      padding: 1px 6px;
+      padding: 2px 6px;
       border-radius: 5px;
-      text-transform: uppercase;
-    }
-    .badge-group.ziara { background: #fce7f3; color: #9d174d; }
-    .badge-group.linus { background: #ede9fe; color: #5b21b6; }
-    .badge-relation {
-      background: #f1ece6;
-      color: var(--text-muted);
-      font-size: 0.68rem;
-      font-weight: 600;
-      padding: 1px 6px;
-      border-radius: 5px;
-    }
-    .person-name {
-      font-size: 1.08rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.25;
-      margin-bottom: 2px;
-      word-break: break-word;
-    }
-    .person-phone {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .person-phone a {
-      color: var(--wine);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    /* Capacity & RSVP Status Box */
-    .status-box {
-      background: #faf7f4;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .plazas-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.84rem;
-    }
-    .plazas-stepper {
-      display: inline-flex;
-      align-items: center;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: #fff;
-      overflow: hidden;
-    }
-    .plazas-stepper button {
-      border: none;
-      background: transparent;
-      padding: 6px 12px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      color: var(--wine);
-      touch-action: manipulation;
-    }
-    .plazas-stepper button:active { background: #f5ebe6; }
-    .plazas-stepper span {
-      padding: 0 8px;
-      font-weight: 700;
-      font-size: 0.86rem;
-    }
-
-    /* Attendance Buttons */
-    .rsvp-choice-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 6px;
-    }
-    .btn-rsvp {
-      border: 1.5px solid var(--border);
-      background: #fff;
-      padding: 10px 4px;
-      border-radius: 8px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-      color: var(--text-muted);
-      transition: all 0.2s;
-      touch-action: manipulation;
-    }
-    .btn-rsvp.confirmed.active {
-      background: var(--green-light);
-      border-color: var(--green);
-      color: var(--green);
-      box-shadow: 0 2px 6px rgba(46,125,50,0.15);
-    }
-    .btn-rsvp.pending.active {
-      background: var(--yellow-light);
-      border-color: var(--yellow);
-      color: var(--yellow);
-      box-shadow: 0 2px 6px rgba(180,83,9,0.15);
-    }
-    .btn-rsvp.declined.active {
-      background: var(--red-light);
-      border-color: var(--red);
-      color: var(--red);
-      box-shadow: 0 2px 6px rgba(198,40,40,0.15);
-    }
-
-    /* WhatsApp direct button (WITHOUT text, opens chat directly) */
-    .btn-wa-ask {
-      background: var(--wa-green);
-      color: #fff;
-      border: none;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      text-decoration: none;
-      box-shadow: 0 3px 8px rgba(37, 211, 102, 0.28);
-      transition: all 0.2s;
-      touch-action: manipulation;
-    }
-    .btn-wa-ask:hover, .btn-wa-ask:active {
-      background: var(--wa-green-dark);
-      transform: translateY(-1px);
-    }
-    .btn-wa-ask.confirmed-subtle {
-      background: #f0faf2;
-      color: var(--green);
-      border: 1px solid var(--green-border);
-      box-shadow: none;
-    }
-    .btn-wa-ask.no-phone {
-      background: #e5ded7;
-      color: var(--text-muted);
-      box-shadow: none;
-      cursor: not-allowed;
-    }
-
-    /* Notes Input */
-    .notes-box {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .notes-box label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
-    .notes-input {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 6px 8px;
-      font-size: 0.82rem;
-      font-family: inherit;
-      background: #fff;
-      outline: none;
-      transition: border-color 0.2s;
+    .tag-chip.ziara { background: #fce7f3; color: #9d174d; }
+    .tag-chip.linus { background: #ede9fe; color: #5b21b6; }
+    .tag-rel {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-weight: 600;
     }
-    .notes-input:focus { border-color: var(--wine); }
+    .card-name {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.25;
+      word-break: break-word;
+    }
+    .card-phone-txt {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 1px;
+    }
+    .card-phone-txt a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
 
-    /* Card Actions Footer */
-    .card-footer-actions {
+    /* Plazas Stepper */
+    .plazas-pill {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #f7f3ee;
+      padding: 3px 6px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .plazas-btn {
+      border: none;
+      background: #fff;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--wine);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .plazas-val {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text);
+      min-width: 14px;
+      text-align: center;
+    }
+
+    /* Segmented Control for Attendance */
+    .segmented-rsvp {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      background: #f2ece6;
+      border-radius: 12px;
+      padding: 3px;
+      gap: 3px;
+      margin-top: 11px;
+    }
+    .seg-btn {
+      border: none;
+      background: transparent;
+      padding: 8px 4px;
+      border-radius: 9px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .seg-btn.active.confirmed {
+      background: var(--surface);
+      color: var(--green);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-weight: 800;
+    }
+    .seg-btn.active.pending {
+      background: var(--surface);
+      color: var(--amber);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-weight: 800;
+    }
+    .seg-btn.active.declined {
+      background: var(--surface);
+      color: var(--red);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-weight: 800;
+    }
+
+    /* WhatsApp Button (Clean & Modern) */
+    .wa-button-row {
+      margin-top: 10px;
+    }
+    .btn-wa-direct {
+      width: 100%;
+      background: var(--wa);
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(37, 211, 102, 0.25);
+      transition: all 0.18s;
+    }
+    .btn-wa-direct:active {
+      background: var(--wa-dark);
+      transform: scale(0.98);
+    }
+    .btn-wa-direct.confirmed-style {
+      background: #eaf7ee;
+      color: var(--green);
+      border: 1px solid #bce6c7;
+      box-shadow: none;
+      font-weight: 700;
+    }
+
+    /* Note & Options Row */
+    .card-footer-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px solid #f1ece7;
+      gap: 8px;
+      margin-top: 9px;
       padding-top: 8px;
-      margin-top: auto;
+      border-top: 1px solid var(--border-subtle);
     }
-    .btn-card-action {
-      background: transparent;
+    .inline-note-input {
+      flex: 1;
       border: none;
+      background: #fbf9f6;
+      border-radius: 6px;
+      padding: 6px 9px;
       font-size: 0.76rem;
-      font-weight: 600;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+    }
+    .inline-note-input:focus { background: #fff; box-shadow: 0 0 0 1px var(--wine); }
+    .btn-subtle-act {
+      border: none;
+      background: transparent;
+      font-size: 0.74rem;
+      font-weight: 700;
       color: var(--text-muted);
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
       padding: 4px 6px;
-      border-radius: 4px;
-      transition: all 0.15s;
+      border-radius: 5px;
     }
-    .btn-card-action:hover, .btn-card-action:active {
-      background: #f1ece7;
-      color: var(--wine);
-    }
-    .btn-card-action.danger:hover, .btn-card-action.danger:active {
-      color: var(--red);
-      background: var(--red-light);
-    }
+    .btn-subtle-act:active { background: #f0e9e2; color: var(--wine); }
 
-    /* Modals */
+    /* Floating Add Button for Mobile */
+    .fab-add {
+      position: fixed;
+      bottom: 22px;
+      right: 20px;
+      background: var(--wine);
+      color: #fff;
+      border: none;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      box-shadow: 0 6px 20px rgba(115, 20, 43, 0.4);
+      cursor: pointer;
+      z-index: 90;
+      transition: all 0.2s;
+    }
+    .fab-add:active { transform: scale(0.92); background: var(--wine-dark); }
+
+    /* Modals (Clean iOS bottom sheet on mobile, centered on desktop) */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.65);
+      background: rgba(0,0,0,0.6);
       backdrop-filter: blur(4px);
       display: none;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       z-index: 1000;
-      padding: 14px;
+      padding: 0;
     }
     .modal-overlay.open { display: flex; }
     .modal-card {
       background: #fff;
-      border-radius: 16px;
       width: 100%;
-      max-width: 500px;
+      max-width: 540px;
+      border-radius: 24px 24px 0 0;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-      padding: 22px;
+      padding: 22px 20px 30px;
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.25);
       position: relative;
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .modal-header {
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    @media (min-width: 600px) {
+      .modal-overlay { align-items: center; padding: 20px; }
+      .modal-card { border-radius: 20px; animation: fadeIn 0.2s ease; }
+      @keyframes fadeIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+    }
+    .modal-handle {
+      width: 38px;
+      height: 4px;
+      background: #ddd;
+      border-radius: 4px;
+      margin: 0 auto 14px;
+    }
+    .modal-head {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
+      align-items: center;
+      margin-bottom: 14px;
     }
     .modal-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.25rem;
+      font-weight: 800;
       color: var(--wine);
     }
-    .modal-close {
+    .btn-m-close {
       border: none;
-      background: transparent;
-      font-size: 1.8rem;
-      color: var(--text-muted);
+      background: #f1ece7;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 1.2rem;
       cursor: pointer;
-      padding: 0 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .form-group {
+
+    .form-item {
       display: flex;
       flex-direction: column;
       gap: 5px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
-    .form-group label {
-      font-size: 0.82rem;
-      font-weight: 600;
+    .form-item label {
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--text);
     }
-    .form-control {
+    .form-input {
       border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 0.88rem;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
       font-family: inherit;
       outline: none;
-      transition: border-color 0.2s;
     }
-    .form-control:focus { border-color: var(--wine); }
-    .form-row-2 {
+    .form-input:focus { border-color: var(--wine); }
+    .form-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 18px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-    }
-    .btn-save {
+    .btn-save-act {
+      width: 100%;
       background: var(--wine);
       color: #fff;
       border: none;
-      padding: 9px 18px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.88rem;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 800;
       cursor: pointer;
-    }
-    .btn-save:hover, .btn-save:active { background: var(--wine-dark); }
-    .btn-cancel {
-      background: #f1ece6;
-      border: 1px solid var(--border);
-      padding: 9px 14px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.88rem;
-      cursor: pointer;
-    }
-
-    /* Photo Upload Area */
-    .photo-preview-wrap {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-top: 4px;
-    }
-    .preview-circle {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--gold-border);
-      background: #f1ece7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.35rem;
-      color: var(--text-muted);
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .preview-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .photo-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
+      margin-top: 14px;
     }
 
     /* Toast */
     .toast {
       position: fixed;
-      bottom: 20px;
+      bottom: 84px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: #2a2321;
+      background: #1f1a18;
       color: #fff;
-      padding: 10px 20px;
+      padding: 10px 18px;
       border-radius: 30px;
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 700;
       box-shadow: 0 8px 24px rgba(0,0,0,0.3);
       transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 2000;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       white-space: nowrap;
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
-
-    /* Hidden file input */
-    #hiddenFileInput { display: none; }
-
-    /* Mobile specific tweaks */
-    @media (max-width: 600px) {
-      header { padding: 18px 12px 14px; }
-      h1 { font-size: 1.6rem; }
-      .container { padding: 0 10px; margin-top: 12px; }
-      .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .stat-card { padding: 10px; }
-      .stat-val { font-size: 1.6rem; }
-      .controls-panel { padding: 12px; gap: 10px; }
-      .scrollable-tabs-wrap { flex-direction: column; align-items: stretch; }
-      .btn-add-guest { width: 100%; justify-content: center; }
-      .filter-search-row { flex-direction: column; align-items: stretch; }
-      .guests-grid { grid-template-columns: 1fr; gap: 12px; }
-      .form-row-2 { grid-template-columns: 1fr; }
-    }
+    #filePicker { display: none; }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="header-content">
-    <div class="wedding-tag">Linus & Ziara · 7 de Noviembre de 2026</div>
-    <h1>Control de Asistencia</h1>
-    <p class="subtitle">Lista oficial para el seguimiento y confirmación de invitados</p>
-    <div class="nav-shortcuts">
-      <a href="index.html" class="nav-link-btn" target="_blank">💌 Ver Invitación Web ↗</a>
-      <a href="invitados.html" class="nav-link-btn">💬 Generador de Mensajes ↗</a>
+<header class="app-header">
+  <div class="header-row">
+    <div>
+      <div class="brand-title">💍 Linus & Ziara</div>
+      <div class="brand-sub">Control de Asistencia · Boda 2026</div>
+    </div>
+    <div class="header-actions">
+      <div class="git-status-badge" id="gitSyncBadge" onclick="openGitSettingsModal()">
+        <span class="pulse-dot"></span>
+        <span id="gitSyncText">Conectar Git</span>
+      </div>
     </div>
   </div>
 </header>
 
-<div class="container">
-  <!-- Stats -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-val" id="statTotalPlazas">54</div>
-      <div class="stat-lbl">Plazas Totales</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val" id="statConfirmed" style="color: var(--green);">0</div>
-      <div class="stat-lbl">Confirmados (Asisten)</div>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" id="statProgressBar"></div>
+<div class="main-wrap">
+  <!-- Ribbon Stats -->
+  <div class="stat-ribbon">
+    <div class="stat-cells">
+      <div class="stat-cell">
+        <div class="num" id="ribbonPlazas">54</div>
+        <div class="lbl">Plazas</div>
+      </div>
+      <div class="stat-cell" style="color: var(--green);">
+        <div class="num" id="ribbonConfirmed">0</div>
+        <div class="lbl">Asisten</div>
+      </div>
+      <div class="stat-cell" style="color: var(--amber);">
+        <div class="num" id="ribbonPending">54</div>
+        <div class="lbl">Pendientes</div>
+      </div>
+      <div class="stat-cell" style="color: var(--red);">
+        <div class="num" id="ribbonDeclined">0</div>
+        <div class="lbl">No van</div>
       </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-val" id="statPending" style="color: var(--yellow);">54</div>
-      <div class="stat-lbl">No Confirmados / Pendientes</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val" id="statDeclined" style="color: var(--red);">0</div>
-      <div class="stat-lbl">No Podrán Asistir</div>
+    <div class="ribbon-progress">
+      <div class="ribbon-progress-fill" id="ribbonProgressFill"></div>
     </div>
   </div>
 
-  <!-- Controls Panel -->
-  <div class="controls-panel">
-    <div class="scrollable-tabs-wrap">
-      <div class="group-tabs">
-        <button class="group-tab-btn active" data-group="all" onclick="setGroup('all')">
-          💍 Todos (<span id="countGroupAll">53</span>)
-        </button>
-        <button class="group-tab-btn" data-group="ziara" onclick="setGroup('ziara')">
-          🌸 Lista de Ziara (<span id="countGroupZiara">23</span>)
-        </button>
-        <button class="group-tab-btn" data-group="linus" onclick="setGroup('linus')">
-          🤵 Lista de Linus (<span id="countGroupLinus">30</span>)
-        </button>
-      </div>
-
-      <button class="btn-add-guest" onclick="openAddGuestModal()">
-        <span>➕ Agregar Invitado</span>
-      </button>
+  <!-- Filters -->
+  <div class="filter-section">
+    <!-- List Switcher -->
+    <div class="group-pills-bar">
+      <button class="grp-btn active" data-grp="all" onclick="selectGroup('all')">💍 Todos (<span id="cntAll">53</span>)</button>
+      <button class="grp-btn" data-grp="ziara" onclick="selectGroup('ziara')">🌸 Ziara (<span id="cntZiara">23</span>)</button>
+      <button class="grp-btn" data-grp="linus" onclick="selectGroup('linus')">🤵 Linus (<span id="cntLinus">30</span>)</button>
     </div>
 
-    <div class="filter-search-row">
-      <div class="search-input-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input type="text" id="searchInput" placeholder="Buscar por nombre, teléfono o nota..." oninput="handleSearch()">
-      </div>
-
-      <div class="status-pills">
-        <button class="status-pill active" data-status="all" onclick="setStatusFilter('all')">
-          Todos (<span id="countStatusAll">53</span>)
-        </button>
-        <button class="status-pill" data-status="confirmed" onclick="setStatusFilter('confirmed')">
-          ✅ Confirmados (<span id="countStatusConfirmed">0</span>)
-        </button>
-        <button class="status-pill" data-status="pending" onclick="setStatusFilter('pending')">
-          ⏳ No confirmados (<span id="countStatusPending">53</span>)
-        </button>
-        <button class="status-pill" data-status="declined" onclick="setStatusFilter('declined')">
-          ❌ No asistirán (<span id="countStatusDeclined">0</span>)
-        </button>
-      </div>
+    <!-- Search Input -->
+    <div class="search-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Buscar por nombre o teléfono..." oninput="handleSearch()">
     </div>
 
-    <div class="tools-row">
-      <button class="btn-tool" onclick="exportCSV()">📥 Descargar en Excel / CSV</button>
-      <button class="btn-tool" onclick="shareOrSyncModal()">📤 Sincronizar con otro celular</button>
-      <button class="btn-tool" onclick="window.print()">🖨️ Imprimir</button>
-      <button class="btn-tool" onclick="resetToInitialData()" style="color:#b91c1c; margin-left:auto;">🔄 Restaurar lista</button>
+    <!-- Status Tabs -->
+    <div class="status-scroll-bar">
+      <button class="pill-btn active" data-st="all" onclick="selectStatus('all')">Todos (<span id="cntStAll">53</span>)</button>
+      <button class="pill-btn" data-st="confirmed" onclick="selectStatus('confirmed')">✅ Confirmados (<span id="cntStConf">0</span>)</button>
+      <button class="pill-btn" data-st="pending" onclick="selectStatus('pending')">⏳ Pendientes (<span id="cntStPend">53</span>)</button>
+      <button class="pill-btn" data-st="declined" onclick="selectStatus('declined')">❌ No asistirán (<span id="cntStDecl">0</span>)</button>
     </div>
   </div>
 
-  <!-- Cards Grid -->
-  <div class="guests-grid" id="guestsContainer">
-    <!-- Injected via JavaScript -->
+  <!-- Cards List -->
+  <div class="guests-list" id="cardsList">
+    <!-- Injected by JavaScript -->
   </div>
 </div>
 
+<!-- Floating Action Button -->
+<button class="fab-add" onclick="openAddModal()" title="Agregar nuevo invitado">＋</button>
+
 <!-- Modal: Add or Edit Guest -->
-<div class="modal-overlay" id="guestModal" onclick="closeModalOnOverlay(event, 'guestModal')">
+<div class="modal-overlay" id="editModal" onclick="closeOverlay(event, 'editModal')">
   <div class="modal-card">
-    <div class="modal-header">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
       <h3 class="modal-title" id="modalTitle">Agregar Invitado</h3>
-      <button class="modal-close" onclick="closeModal('guestModal')">&times;</button>
+      <button class="btn-m-close" onclick="closeModal('editModal')">&times;</button>
     </div>
 
-    <form id="guestForm" onsubmit="handleSaveGuest(event)">
+    <form onsubmit="saveGuestForm(event)">
       <input type="hidden" id="editGuestId">
 
-      <div class="form-group">
-        <label for="inputName">Nombre completo / Pareja *</label>
-        <input type="text" id="inputName" class="form-control" required placeholder="Ej: Diana Vallejo">
+      <div class="form-item">
+        <label>Nombre del invitado / pareja *</label>
+        <input type="text" id="mName" class="form-input" required placeholder="Ej: Diana Vallejo">
       </div>
 
-      <div class="form-row-2">
-        <div class="form-group">
-          <label for="inputPhone">Teléfono / WhatsApp</label>
-          <input type="tel" id="inputPhone" class="form-control" placeholder="Ej: 829-327-9472">
+      <div class="form-2col">
+        <div class="form-item">
+          <label>Teléfono (WhatsApp)</label>
+          <input type="tel" id="mPhone" class="form-input" placeholder="Ej: 829-327-9472">
         </div>
-        <div class="form-group">
-          <label for="inputPersonas">Plazas reservadas</label>
-          <input type="number" id="inputPersonas" class="form-control" min="1" max="20" value="1" required>
+        <div class="form-item">
+          <label>Plazas</label>
+          <input type="number" id="mPersonas" class="form-input" min="1" max="20" value="1" required>
         </div>
       </div>
 
-      <div class="form-row-2">
-        <div class="form-group">
-          <label for="inputGroup">¿De qué lista es?</label>
-          <select id="inputGroup" class="form-control">
+      <div class="form-2col">
+        <div class="form-item">
+          <label>Lista</label>
+          <select id="mGroup" class="form-input">
             <option value="ziara">🌸 Lista de Ziara</option>
             <option value="linus">🤵 Lista de Linus</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="inputRelation">Relación / Categoría</label>
-          <input type="text" id="inputRelation" class="form-control" placeholder="Ej: Familia, Amigo, etc.">
+        <div class="form-item">
+          <label>Relación</label>
+          <input type="text" id="mRelation" class="form-input" placeholder="Familia, Amigo...">
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="inputStatus">Estado de Asistencia</label>
-        <select id="inputStatus" class="form-control">
-          <option value="pending">⏳ No confirmado / Pendiente</option>
-          <option value="confirmed">✅ Confirmado (Asistirá)</option>
-          <option value="declined">❌ No asistirá</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Foto de Perfil</label>
-        <div class="photo-preview-wrap">
-          <div class="preview-circle" id="formPhotoPreview">
-            <span>📷</span>
-          </div>
-          <div class="photo-actions">
-            <button type="button" class="btn-tool" onclick="triggerFileInput('modal')">📁 Subir / Tomar foto</button>
-            <button type="button" class="btn-card-action danger" id="btnRemoveFormPhoto" style="display:none;" onclick="removeFormPhoto()">Quitar foto</button>
-          </div>
+      <div class="form-item">
+        <label>Foto de perfil</label>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div id="mPhotoPrev" style="width:48px; height:48px; border-radius:50%; background:#eee; display:flex; align-items:center; justify-content:center; overflow:hidden; font-size:1.2rem;">📷</div>
+          <button type="button" class="pill-btn" onclick="triggerPhotoPick('modal')">📁 Elegir / Tomar foto</button>
+          <button type="button" class="btn-subtle-act" id="btnDelPhoto" style="display:none; color:var(--red);" onclick="delFormPhoto()">Quitar</button>
         </div>
-        <input type="hidden" id="inputPhotoData">
+        <input type="hidden" id="mPhotoData">
       </div>
 
-      <div class="form-group">
-        <label for="inputNotes">Notas privadas (Alergias, acompañantes, etc.)</label>
-        <textarea id="inputNotes" class="form-control" rows="2" placeholder="Notas sobre la confirmación..."></textarea>
+      <div class="form-item">
+        <label>Nota rápida</label>
+        <input type="text" id="mNotes" class="form-input" placeholder="Comentarios, acompañantes...">
       </div>
 
-      <div class="modal-actions">
-        <button type="button" class="btn-cancel" onclick="closeModal('guestModal')">Cancelar</button>
-        <button type="submit" class="btn-save" id="btnSubmitModal">Guardar Invitado</button>
-      </div>
+      <button type="submit" class="btn-save-act">Guardar Invitado</button>
     </form>
   </div>
 </div>
 
-<!-- Modal: Sync / Share -->
-<div class="modal-overlay" id="syncModal" onclick="closeModalOnOverlay(event, 'syncModal')">
+<!-- Modal: Git Auto-Sync Config -->
+<div class="modal-overlay" id="gitModal" onclick="closeOverlay(event, 'gitModal')">
   <div class="modal-card">
-    <div class="modal-header">
-      <h3 class="modal-title">Sincronizar Celulares</h3>
-      <button class="modal-close" onclick="closeModal('syncModal')">&times;</button>
-    </div>
-    <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:12px;">
-      Para que Linus y Ziara tengan exactamente la misma lista en sus celulares:
-      <br>1. En el celular que tiene los cambios, pulsa <b>«Copiar código»</b> y envíaselo al otro por WhatsApp.
-      <br>2. En el otro celular, pégalo abajo y pulsa <b>«Cargar Datos»</b>.
-    </p>
-    <div class="form-group">
-      <label>Código de respaldo actual:</label>
-      <textarea id="backupDataArea" class="form-control" rows="4" readonly style="font-family:monospace; font-size:0.72rem;"></textarea>
-    </div>
-    <div style="display:flex; gap:10px; margin-bottom:14px;">
-      <button class="btn-save" onclick="copyBackupData()" style="flex:1;">📋 Copiar código para enviar</button>
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <h3 class="modal-title">Guardado Automático en Git</h3>
+      <button class="btn-m-close" onclick="closeModal('gitModal')">&times;</button>
     </div>
 
-    <div class="form-group" style="border-top:1px solid var(--border); padding-top:12px;">
-      <label>Pegar código recibido por WhatsApp:</label>
-      <textarea id="importDataArea" class="form-control" rows="3" placeholder="Pega aquí el código copiado..."></textarea>
+    <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:12px;">
+      Conecta tu Token de GitHub para que cada vez que tú o Ziara marquen a alguien como <b>Confirmado</b>, se guarde <b>automáticamente en el Git</b> en tiempo real sin tener que mandar códigos.
+    </p>
+
+    <div class="form-item">
+      <label>Token de GitHub (Personal Access Token):</label>
+      <input type="password" id="gitTokenInput" class="form-input" placeholder="ghp_xxxxxxxxxxxx...">
+      <small style="font-size:0.72rem; color:var(--text-muted); margin-top:3px;">
+        👉 <a href="https://github.com/settings/tokens/new?description=Boda-Linus-Ziara-Sync&scopes=repo" target="_blank" style="color:var(--wine); font-weight:700;">Haz clic aquí para crear tu token en GitHub</a> (marca la casilla <b>repo</b> y pulsa Generar).
+      </small>
     </div>
-    <div class="modal-actions">
-      <button type="button" class="btn-save" onclick="handleImportData()">📥 Cargar Datos en este celular</button>
+
+    <button type="button" class="btn-save-act" onclick="saveGitToken()" style="margin-top:4px;">🔐 Conectar y Guardar en Git</button>
+
+    <div id="ziaraShareSection" style="margin-top:20px; padding-top:14px; border-top:1px solid var(--border); display:none;">
+      <label style="font-size:0.8rem; font-weight:700; color:var(--wine);">📲 Enlace para el celular de Ziara:</label>
+      <p style="font-size:0.75rem; color:var(--text-muted); margin:4px 0 8px;">
+        Envíale este enlace por WhatsApp a Ziara. Al tocarlo en su celular, quedará conectada a Git automáticamente sin tener que configurar nada.
+      </p>
+      <button type="button" class="btn-wa-direct" onclick="copyZiaraLink()">
+        <span>💬 Copiar enlace directo para Ziara</span>
+      </button>
     </div>
   </div>
 </div>
 
-<!-- Hidden File Input for Image Uploads -->
-<input type="file" id="hiddenFileInput" accept="image/*" onchange="handleFileSelected(event)">
-
-<div class="toast" id="toast">Operación realizada con éxito</div>
+<input type="file" id="filePicker" accept="image/*" onchange="fileSelected(event)">
+<div class="toast" id="toastMsg">Operación exitosa</div>
 
 <script>
 const INITIAL_DATA = [{"id": 101, "list_num": "1", "name": "Zairys Ortiz", "greeting": "Zairys", "phone": "", "wa": "", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 102, "list_num": "2", "name": "Ziarys Franco", "greeting": "Ziarys", "phone": "+1 (829) 327-9472", "wa": "18293279472", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 103, "list_num": "3", "name": "Miguel Franco (Hermano)", "greeting": "Miguel", "phone": "+1 (809) 820-7547", "wa": "18098207547", "personas": 1, "group": "ziara", "relation": "Hermano", "status": "pending", "notes": "", "photo": ""}, {"id": 104, "list_num": "4", "name": "Miguel Franco", "greeting": "Miguel", "phone": "+1 (849) 861-7424", "wa": "18498617424", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 105, "list_num": "5", "name": "Yanela Ortiz", "greeting": "Yanela", "phone": "", "wa": "", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 106, "list_num": "6", "name": "Angela Ortiz", "greeting": "Angela", "phone": "+1 (849) 431-4493", "wa": "18494314493", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 107, "list_num": "7", "name": "Saul Ortiz", "greeting": "Saul", "phone": "+1 (809) 250-9989", "wa": "18092509989", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 108, "list_num": "8", "name": "Jonny Franco (Tío)", "greeting": "Jonny", "link_name": "Jonny Franco", "phone": "+1 (829) 440-9174", "wa": "18294409174", "personas": 1, "group": "ziara", "relation": "Tío", "status": "pending", "notes": "Comparte teléfono con Jonny Franco primo", "photo": ""}, {"id": 109, "list_num": "9", "name": "Jonny Franco (Primo)", "greeting": "Jonny", "link_name": "Jonny Franco", "phone": "+1 (829) 440-9174", "wa": "18294409174", "personas": 1, "group": "ziara", "relation": "Primo", "status": "pending", "notes": "Comparte teléfono con Jonny Franco tío", "photo": ""}, {"id": 110, "list_num": "10", "name": "Dineidi Moreno", "greeting": "Dineidi", "phone": "+1 (829) 262-3338", "wa": "18292623338", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "Comparte teléfono con Dircia Moreno", "photo": ""}, {"id": 111, "list_num": "11", "name": "Dircia Moreno", "greeting": "Dircia", "phone": "+1 (829) 262-3338", "wa": "18292623338", "personas": 1, "group": "ziara", "relation": "Familia", "status": "pending", "notes": "Comparte teléfono con Dineidi Moreno", "photo": ""}, {"id": 112, "list_num": "12", "name": "Diana Vallejo (Carola)", "greeting": "Diana", "link_name": "Diana Vallejo", "phone": "+1 (829) 722-4935", "wa": "18297224935", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 113, "list_num": "13-14", "name": "Ana Olivares y esposo", "greeting": "Ana", "link_name": "Ana Olivares y esposo", "phone": "+1 (809) 940-1441", "wa": "18099401441", "personas": 2, "group": "ziara", "relation": "Pareja (13 y 14)", "status": "pending", "notes": "Plazas reservadas: 2 personas", "photo": ""}, {"id": 115, "list_num": "15", "name": "Anthony Hernandez", "greeting": "Anthony", "phone": "+1 (829) 722-3674", "wa": "18297223674", "personas": 1, "group": "ziara", "relation": "Amigo", "status": "pending", "notes": "", "photo": ""}, {"id": 116, "list_num": "16", "name": "Vanessa Gutierrez", "greeting": "Vanessa", "phone": "+1 (809) 866-9902", "wa": "18098669902", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 117, "list_num": "17", "name": "Lia Custodio", "greeting": "Lia", "phone": "+1 (809) 868-5984", "wa": "18098685984", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 118, "list_num": "18", "name": "Lory Encarnación", "greeting": "Lory", "phone": "+1 (829) 722-2966", "wa": "18297222966", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 119, "list_num": "19", "name": "Jeniffer Sierra", "greeting": "Jeniffer", "phone": "+1 (809) 470-2708", "wa": "18094702708", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 120, "list_num": "20", "name": "Ysmeilin Dipré", "greeting": "Ysmeilin", "phone": "+1 (809) 322-0084", "wa": "18093220084", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 121, "list_num": "21", "name": "Yokeini Guzman", "greeting": "Yokeini", "phone": "+1 (829) 828-6962", "wa": "18298286962", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 122, "list_num": "22", "name": "Maria Bautista", "greeting": "Maria", "phone": "", "wa": "", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 123, "list_num": "23", "name": "Zaima", "greeting": "Zaima", "phone": "+1 (224) 247-7118", "wa": "12242477118", "personas": 1, "group": "ziara", "relation": "Amiga (EE. UU.)", "status": "pending", "notes": "", "photo": ""}, {"id": 124, "list_num": "24", "name": "Neidy Reyes", "greeting": "Neidy", "phone": "+1 (829) 382-0611", "wa": "18293820611", "personas": 1, "group": "ziara", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 1, "list_num": "1", "name": "Moreno Aquino", "greeting": "Moreno", "phone": "809-714-1816", "wa": "18097141816", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 2, "list_num": "2", "name": "Guarin Aquino", "greeting": "Guarin", "phone": "829-684-8921", "wa": "18296848921", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 3, "list_num": "3", "name": "Daty Nidian Aquino", "greeting": "Daty Nidian", "phone": "829-358-4005", "wa": "18293584005", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 4, "list_num": "4", "name": "Caco Aquino / Luis Alexander", "greeting": "Caco", "link_name": "Luis Alexander Aquino", "phone": "829-425-3775", "wa": "18294253775", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 5, "list_num": "5", "name": "Ciprian Aquino", "greeting": "Ciprian", "phone": "849-316-3405", "wa": "18493163405", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 6, "list_num": "6", "name": "Mariola Aquino", "greeting": "Mariola", "phone": "829-208-3786", "wa": "18292083786", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 7, "list_num": "7", "name": "Jose Aquino", "greeting": "Jose", "phone": "809-964-5963", "wa": "18099645963", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 8, "list_num": "8", "name": "Francisco Aquino", "greeting": "Francisco", "phone": "829-805-2366", "wa": "18298052366", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 9, "list_num": "9", "name": "Daniel Aquino", "greeting": "Daniel", "phone": "809-297-2037", "wa": "18092972037", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 10, "list_num": "10", "name": "Manuel Aquino", "greeting": "Manuel", "phone": "829-894-6568", "wa": "18298946568", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 11, "list_num": "11", "name": "Mirciades Aquino", "greeting": "Mirciades", "phone": "849-497-4621", "wa": "18494974621", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 12, "list_num": "12", "name": "Moises Abraham Chean Saviñon", "greeting": "Moises", "phone": "809-980-7682", "wa": "18099807682", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 13, "list_num": "13", "name": "Hestor Aquino", "greeting": "Hestor", "phone": "809-313-2240", "wa": "18093132240", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 14, "list_num": "14", "name": "Mari Rosario", "greeting": "Mari", "phone": "809-899-2055", "wa": "18098992055", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 15, "list_num": "15", "name": "Osvaldo Perdomo", "greeting": "Osvaldo", "phone": "829-494-9037", "wa": "18294949037", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 16, "list_num": "16", "name": "Niolvania Aquino", "greeting": "Niolvania", "phone": "829-205-5776", "wa": "18292055776", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 17, "list_num": "17", "name": "Lars Salathe", "greeting": "Lars", "phone": "829-440-1946", "wa": "18294401946", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 18, "list_num": "18", "name": "Leo Salathe", "greeting": "Leo", "phone": "41.98 30270 07", "wa": "41983027007", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "Posible móvil suizo +41 78 302 70 07", "photo": ""}, {"id": 19, "list_num": "19", "name": "Lucas Salathe", "greeting": "Lucas", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 20, "list_num": "20", "name": "Yojarlin", "greeting": "Yojarlin", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Amigo", "status": "pending", "notes": "", "photo": ""}, {"id": 21, "list_num": "21", "name": "Heidy Aquino", "greeting": "Heidy", "phone": "809-783-6618", "wa": "18097836618", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 22, "list_num": "22", "name": "Junior Aquino", "greeting": "Junior", "phone": "829-520-7169", "wa": "18295207169", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 23, "list_num": "23", "name": "Jhenison Aquino", "greeting": "Jhenison", "phone": "809-460-5356", "wa": "18094605356", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 24, "list_num": "24", "name": "Maridalis Aquino", "greeting": "Maridalis", "phone": "849-206-1098", "wa": "18492061098", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 25, "list_num": "25", "name": "Diego Aquino (Kiña)", "greeting": "Diego", "link_name": "Diego Aquino", "phone": "809-396-3554", "wa": "18093963554", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 26, "list_num": "26", "name": "Yulisa Aquino", "greeting": "Yulisa", "phone": "829-936-0413", "wa": "18299360413", "personas": 1, "group": "linus", "relation": "Familia", "status": "pending", "notes": "", "photo": ""}, {"id": 27, "list_num": "27", "name": "Marian", "greeting": "Marian", "phone": "829-444-6226", "wa": "18294446226", "personas": 1, "group": "linus", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 28, "list_num": "28", "name": "Victoria", "greeting": "Victoria", "phone": "829-505-3926", "wa": "18295053926", "personas": 1, "group": "linus", "relation": "Amiga", "status": "pending", "notes": "", "photo": ""}, {"id": 29, "list_num": "29", "name": "Novia de Leo", "greeting": "Amiga", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Pareja de Leo", "status": "pending", "notes": "Puede unirse con Leo (2 plazas)", "photo": ""}, {"id": 30, "list_num": "30", "name": "Esposa de Yojarlin", "greeting": "Amiga", "phone": "", "wa": "", "personas": 1, "group": "linus", "relation": "Esposa de Yojarlin", "status": "pending", "notes": "Puede unirse con Yojarlin (2 plazas)", "photo": ""}];
-const STORAGE_KEY = 'linus_ziara_wedding_attendance_v3';
+const GITHUB_REPO = 'LuckyOne69/invitacion-linus-ziara';
+const GITHUB_FILE_PATH = 'data/asistencia.json';
+const LOCAL_STORAGE_KEY = 'linus_ziara_wedding_attendance_v4';
+const TOKEN_STORAGE_KEY = 'linus_ziara_github_pat_v1';
 
 let guests = [];
 let currentGroup = 'all';
 let currentStatus = 'all';
 let searchQuery = '';
-let targetPhotoGuestId = null;
+let targetPhotoId = null;
+let gitSha = null;
+let isSavingToGit = false;
+let gitToken = localStorage.getItem(TOKEN_STORAGE_KEY) || '';
 
-const MONO_COLORS = [
-  '#73142b', '#94203c', '#530d1e', '#8b5cf6', '#d97706',
-  '#0d9488', '#0284c7', '#4338ca', '#be185d', '#059669'
-];
-
-function getMonogramColor(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  return MONO_COLORS[Math.abs(hash) % MONO_COLORS.length];
+// Palette for avatars
+const PALETTE = ['#73142b', '#94203c', '#530d1e', '#8b5cf6', '#d97706', '#0d9488', '#0284c7', '#4338ca', '#be185d', '#059669'];
+function getAvatarColor(name) {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
+  return PALETTE[Math.abs(h) % PALETTE.length];
 }
-
 function getInitials(name) {
   if (!name) return 'LZ';
   const parts = name.trim().split(/\s+/);
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[1][0]).toUpperCase();
+  return parts.length === 1 ? parts[0].slice(0,2).toUpperCase() : (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
-function loadData() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    try {
-      guests = JSON.parse(saved);
-    } catch(e) {
-      guests = JSON.parse(JSON.stringify(INITIAL_DATA));
+// Check URL Hash for automatic Ziara pairing (#auth=...)
+function checkAuthHash() {
+  const hash = window.location.hash;
+  if (hash && hash.includes('auth=')) {
+    const tokenMatch = hash.match(/auth=([^&]+)/);
+    if (tokenMatch && tokenMatch[1]) {
+      gitToken = decodeURIComponent(tokenMatch[1]);
+      localStorage.setItem(TOKEN_STORAGE_KEY, gitToken);
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      showToast('¡Conectado automáticamente con Git!');
     }
-  } else {
-    guests = JSON.parse(JSON.stringify(INITIAL_DATA));
   }
 }
 
-function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
+// Load Data (First from Git, fallback to localStorage/initial)
+async function initApp() {
+  checkAuthHash();
+  updateGitBadgeUI();
+
+  // Load local cache first for instant rendering
+  const cached = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (cached) {
+    try { guests = JSON.parse(cached); } catch(e) { guests = JSON.parse(JSON.stringify(INITIAL_DATA)); }
+  } else {
+    guests = JSON.parse(JSON.stringify(INITIAL_DATA));
+  }
   updateStats();
+  renderCards();
+
+  // Now fetch live data from Git repository in background
+  await fetchFromGit();
+}
+
+async function fetchFromGit() {
+  try {
+    const url = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${GITHUB_FILE_PATH}?_t=${Date.now()}`;
+    const res = await fetch(url);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        guests = data;
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(guests));
+        updateStats();
+        renderCards();
+      }
+    }
+    // Also fetch SHA if token present
+    if (gitToken) {
+      const metaRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
+        headers: { 'Authorization': `Bearer ${gitToken}`, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if (metaRes.ok) {
+        const meta = await metaRes.json();
+        gitSha = meta.sha;
+      }
+    }
+  } catch(e) {
+    console.log('Using local cached data.');
+  }
+}
+
+function updateGitBadgeUI() {
+  const badge = document.getElementById('gitSyncBadge');
+  const txt = document.getElementById('gitSyncText');
+  const ziaraSec = document.getElementById('ziaraShareSection');
+
+  if (gitToken) {
+    badge.className = 'git-status-badge connected';
+    txt.textContent = '● Guardado en Git';
+    if (ziaraSec) ziaraSec.style.display = 'block';
+  } else {
+    badge.className = 'git-status-badge';
+    txt.textContent = '⚡ Conectar Git';
+    if (ziaraSec) ziaraSec.style.display = 'none';
+  }
+}
+
+// Auto-Save: updates local immediately, and commits to Git automatically!
+async function triggerSave(commitMsg = 'Actualiza asistencia') {
+  // 1. Save local immediately
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(guests));
+  updateStats();
+
+  // 2. If GitHub Token is connected, commit directly to Git!
+  if (gitToken) {
+    pushToGit(commitMsg);
+  }
+}
+
+let gitDebounceTimer = null;
+function pushToGit(commitMsg) {
+  clearTimeout(gitDebounceTimer);
+  const badge = document.getElementById('gitSyncBadge');
+  const txt = document.getElementById('gitSyncText');
+  badge.className = 'git-status-badge saving';
+  txt.textContent = 'Guardando en Git...';
+
+  gitDebounceTimer = setTimeout(async () => {
+    try {
+      // Get current SHA if not present
+      if (!gitSha) {
+        const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
+          headers: { 'Authorization': `Bearer ${gitToken}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (getRes.ok) {
+          const meta = await getRes.json();
+          gitSha = meta.sha;
+        }
+      }
+
+      const contentStr = JSON.stringify(guests, null, 2);
+      const b64 = btoa(unescape(encodeURIComponent(contentStr)));
+
+      const putRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${gitToken}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: commitMsg + ' (Boda Linus & Ziara)',
+          content: b64,
+          sha: gitSha
+        })
+      });
+
+      if (putRes.ok) {
+        const resData = await putRes.json();
+        gitSha = resData.content.sha;
+        badge.className = 'git-status-badge connected';
+        txt.textContent = '● Guardado en Git';
+        showToast('Guardado en Git con éxito');
+      } else if (putRes.status === 409) {
+        // Conflict: retry with fresh SHA
+        gitSha = null;
+        pushToGit(commitMsg);
+      } else {
+        badge.className = 'git-status-badge';
+        txt.textContent = '⚠️ Error en Git';
+      }
+    } catch(err) {
+      badge.className = 'git-status-badge';
+      txt.textContent = '⚠️ Reintentar';
+    }
+  }, 1000);
 }
 
 function updateStats() {
-  const filteredByGroup = guests.filter(g => currentGroup === 'all' || g.group === currentGroup);
-  const totalPlazas = filteredByGroup.reduce((acc, g) => acc + (parseInt(g.personas, 10) || 1), 0);
-  
-  const confirmedPlazas = filteredByGroup
-    .filter(g => g.status === 'confirmed')
-    .reduce((acc, g) => acc + (parseInt(g.personas, 10) || 1), 0);
+  const filtered = guests.filter(g => currentGroup === 'all' || g.group === currentGroup);
+  const totalPlazas = filtered.reduce((acc, g) => acc + (parseInt(g.personas, 10) || 1), 0);
+  const confirmedPlazas = filtered.filter(g => g.status === 'confirmed').reduce((acc, g) => acc + (parseInt(g.personas, 10) || 1), 0);
+  const pendingPlazas = filtered.filter(g => g.status === 'pending' || !g.status).reduce((acc, g) => acc + (parseInt(g.personas, 10) || 1), 0);
+  const declinedPlazas = filtered.filter(g => g.status === 'declined').reduce((acc, g) => acc + (parseInt(g.personas, 10) || 1), 0);
 
-  const pendingPlazas = filteredByGroup
-    .filter(g => g.status === 'pending' || !g.status)
-    .reduce((acc, g) => acc + (parseInt(g.personas, 10) || 1), 0);
-
-  const declinedPlazas = filteredByGroup
-    .filter(g => g.status === 'declined')
-    .reduce((acc, g) => acc + (parseInt(g.personas, 10) || 1), 0);
-
-  document.getElementById('statTotalPlazas').textContent = totalPlazas;
-  document.getElementById('statConfirmed').textContent = confirmedPlazas;
-  document.getElementById('statPending').textContent = pendingPlazas;
-  document.getElementById('statDeclined').textContent = declinedPlazas;
+  document.getElementById('ribbonPlazas').textContent = totalPlazas;
+  document.getElementById('ribbonConfirmed').textContent = confirmedPlazas;
+  document.getElementById('ribbonPending').textContent = pendingPlazas;
+  document.getElementById('ribbonDeclined').textContent = declinedPlazas;
 
   const pct = totalPlazas > 0 ? Math.round((confirmedPlazas / totalPlazas) * 100) : 0;
-  document.getElementById('statProgressBar').style.width = pct + '%';
+  document.getElementById('ribbonProgressFill').style.width = pct + '%';
 
-  // Counts for pills
-  document.getElementById('countGroupAll').textContent = guests.length;
-  document.getElementById('countGroupZiara').textContent = guests.filter(g => g.group === 'ziara').length;
-  document.getElementById('countGroupLinus').textContent = guests.filter(g => g.group === 'linus').length;
+  document.getElementById('cntAll').textContent = guests.length;
+  document.getElementById('cntZiara').textContent = guests.filter(g => g.group === 'ziara').length;
+  document.getElementById('cntLinus').textContent = guests.filter(g => g.group === 'linus').length;
 
-  document.getElementById('countStatusAll').textContent = filteredByGroup.length;
-  document.getElementById('countStatusConfirmed').textContent = filteredByGroup.filter(g => g.status === 'confirmed').length;
-  document.getElementById('countStatusPending').textContent = filteredByGroup.filter(g => g.status === 'pending' || !g.status).length;
-  document.getElementById('countStatusDeclined').textContent = filteredByGroup.filter(g => g.status === 'declined').length;
+  document.getElementById('cntStAll').textContent = filtered.length;
+  document.getElementById('cntStConf').textContent = filtered.filter(g => g.status === 'confirmed').length;
+  document.getElementById('cntStPend').textContent = filtered.filter(g => g.status === 'pending' || !g.status).length;
+  document.getElementById('cntStDecl').textContent = filtered.filter(g => g.status === 'declined').length;
 }
 
-function render() {
-  const container = document.getElementById('guestsContainer');
+function renderCards() {
+  const container = document.getElementById('cardsList');
   container.innerHTML = '';
 
   const list = guests.filter(g => {
     if (currentGroup !== 'all' && g.group !== currentGroup) return false;
-
-    const guestStatus = g.status || 'pending';
-    if (currentStatus !== 'all' && guestStatus !== currentStatus) return false;
-
+    const st = g.status || 'pending';
+    if (currentStatus !== 'all' && st !== currentStatus) return false;
     if (searchQuery) {
-      const matchName = g.name.toLowerCase().includes(searchQuery);
-      const matchPhone = (g.phone || '').toLowerCase().includes(searchQuery);
-      const matchNotes = (g.notes || '').toLowerCase().includes(searchQuery);
-      const matchRelation = (g.relation || '').toLowerCase().includes(searchQuery);
-      if (!matchName && !matchPhone && !matchNotes && !matchRelation) return false;
+      const q = searchQuery;
+      if (!g.name.toLowerCase().includes(q) && !(g.phone||'').includes(q) && !(g.notes||'').toLowerCase().includes(q)) return false;
     }
     return true;
   });
 
   if (list.length === 0) {
-    container.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-muted); font-size:1rem;">No se encontraron invitados con estos criterios.</div>';
+    container.innerHTML = '<div style="text-align:center; padding:36px 16px; color:var(--text-muted); font-size:0.92rem;">No se encontraron invitados con estos filtros.</div>';
     return;
   }
 
   list.forEach(g => {
     const card = document.createElement('div');
-    const guestStatus = g.status || 'pending';
-    card.className = `guest-card ${guestStatus}`;
-    card.id = `guest-card-${g.id}`;
+    const st = g.status || 'pending';
+    card.className = `guest-card ${st}`;
 
-    const color = getMonogramColor(g.name);
+    const color = getAvatarColor(g.name);
     const initials = getInitials(g.name);
     const hasPhoto = Boolean(g.photo);
 
-    // Direct WhatsApp link WITHOUT any text message
-    const waDirectUrl = g.wa ? `https://wa.me/${g.wa}` : null;
+    // Direct WhatsApp Link (NO message text)
+    const waUrl = g.wa ? `https://wa.me/${g.wa}` : null;
     const telLink = g.phone ? `tel:${g.phone.replace(/[^\d+]/g, '')}` : null;
 
     card.innerHTML = `
-      <div class="card-person-header">
-        <div class="avatar-wrap" onclick="changeGuestPhotoPrompt(${g.id})" title="Toca para cambiar o subir foto">
+      <div class="card-top">
+        <div class="avatar-box" onclick="pickPhotoFor(${g.id})" title="Toca para cambiar foto">
           ${hasPhoto 
             ? `<img src="${g.photo}" alt="${escapeHtml(g.name)}" class="avatar-img">`
-            : `<div class="avatar-initials" style="background:${color};">${initials}</div>`
+            : `<div class="avatar-mono" style="background:${color};">${initials}</div>`
           }
-          <div class="avatar-camera-badge" title="Cambiar foto">📷</div>
+          <div class="avatar-cam-badge">📷</div>
         </div>
 
-        <div class="person-info">
-          <div class="person-top-meta">
-            <span class="badge-group ${g.group}">${g.group === 'ziara' ? '🌸 Ziara' : '🤵 Linus'}</span>
-            ${g.relation ? `<span class="badge-relation">${escapeHtml(g.relation)}</span>` : ''}
-            <span style="font-size:0.7rem; color:var(--text-muted); margin-left:auto;">#${g.list_num || g.id}</span>
+        <div class="card-info">
+          <div class="card-meta-line">
+            <span class="tag-chip ${g.group}">${g.group === 'ziara' ? '🌸 Ziara' : '🤵 Linus'}</span>
+            ${g.relation ? `<span class="tag-rel">· ${escapeHtml(g.relation)}</span>` : ''}
           </div>
-          <h4 class="person-name">${escapeHtml(g.name)}</h4>
-          <div class="person-phone">
+          <h4 class="card-name">${escapeHtml(g.name)}</h4>
+          <div class="card-phone-txt">
             <span>📞</span>
-            ${g.phone ? `
-              <a href="${telLink || '#'}" title="Llamar">${escapeHtml(g.phone)}</a>
-            ` : '<span style="color:#a89f9b;">Sin teléfono registrado</span>'}
+            ${g.phone ? `<a href="${telLink || '#'}">${escapeHtml(g.phone)}</a>` : '<span style="color:#b5aba5;">Sin teléfono</span>'}
           </div>
+        </div>
+
+        <div class="plazas-pill">
+          <button class="plazas-btn" onclick="stepPlazas(${g.id}, -1)">−</button>
+          <span class="plazas-val">${g.personas || 1}</span>
+          <button class="plazas-btn" onclick="stepPlazas(${g.id}, 1)">+</button>
         </div>
       </div>
 
-      <div class="status-box">
-        <div class="plazas-row">
-          <span>Plazas reservadas:</span>
-          <div class="plazas-stepper">
-            <button type="button" onclick="adjustPlazas(${g.id}, -1)">−</button>
-            <span>${g.personas || 1}</span>
-            <button type="button" onclick="adjustPlazas(${g.id}, 1)">+</button>
-          </div>
-        </div>
+      <!-- Segmented RSVP Status -->
+      <div class="segmented-rsvp">
+        <button class="seg-btn ${st === 'confirmed' ? 'active confirmed' : ''}" onclick="setStatus(${g.id}, 'confirmed')">
+          <span>✅</span> Asiste
+        </button>
+        <button class="seg-btn ${st === 'pending' ? 'active pending' : ''}" onclick="setStatus(${g.id}, 'pending')">
+          <span>⏳</span> Pendiente
+        </button>
+        <button class="seg-btn ${st === 'declined' ? 'active declined' : ''}" onclick="setStatus(${g.id}, 'declined')">
+          <span>❌</span> No va
+        </button>
+      </div>
 
-        <div class="rsvp-choice-buttons">
-          <button type="button" class="btn-rsvp confirmed ${guestStatus === 'confirmed' ? 'active' : ''}" onclick="setGuestStatus(${g.id}, 'confirmed')">
-            <span>✅</span>
-            <span>Confirmado</span>
-          </button>
-          <button type="button" class="btn-rsvp pending ${guestStatus === 'pending' ? 'active' : ''}" onclick="setGuestStatus(${g.id}, 'pending')">
-            <span>⏳</span>
-            <span>Pendiente</span>
-          </button>
-          <button type="button" class="btn-rsvp declined ${guestStatus === 'declined' ? 'active' : ''}" onclick="setGuestStatus(${g.id}, 'declined')">
-            <span>❌</span>
-            <span>No asistirá</span>
-          </button>
-        </div>
-
-        <!-- WhatsApp direct button: opens chat directly without message to ask -->
-        ${waDirectUrl ? `
-          <a href="${waDirectUrl}" target="_blank" class="btn-wa-ask ${guestStatus === 'confirmed' ? 'confirmed-subtle' : ''}">
+      <!-- WhatsApp Button (No text, opens directly to chat) -->
+      ${waUrl ? `
+        <div class="wa-button-row">
+          <a href="${waUrl}" target="_blank" class="btn-wa-direct ${st === 'confirmed' ? 'confirmed-style' : ''}">
             <span>💬</span>
-            <span>${guestStatus === 'confirmed' ? 'Abrir chat en WhatsApp' : 'Preguntar por WhatsApp (Abrir chat)'}</span>
+            <span>${st === 'confirmed' ? 'Abrir chat de WhatsApp' : 'Preguntar por WhatsApp (Abrir chat)'}</span>
           </a>
-        ` : `
-          <div class="btn-wa-ask no-phone" onclick="openEditGuestModal(${g.id})">
-            <span>⚠️ Sin número para WhatsApp (Toca para añadir)</span>
-          </div>
-        `}
-
-        <div class="notes-box">
-          <label>Nota rápida:</label>
-          <input type="text" class="notes-input" placeholder="Ej: confirmará el viernes, viene con niño..." value="${escapeHtml(g.notes || '')}" onchange="saveQuickNote(${g.id}, this.value)">
         </div>
-      </div>
+      ` : ''}
 
-      <div class="card-footer-actions">
-        <button type="button" class="btn-card-action" onclick="openEditGuestModal(${g.id})">
-          <span>✏️ Modificar</span>
-        </button>
-        ${hasPhoto ? `<button type="button" class="btn-card-action" onclick="removeGuestPhoto(${g.id})">Quitar foto</button>` : ''}
-        <button type="button" class="btn-card-action danger" onclick="deleteGuest(${g.id})">
-          <span>🗑️ Remover</span>
-        </button>
+      <!-- Note & Options -->
+      <div class="card-footer-row">
+        <input type="text" class="inline-note-input" placeholder="Añadir nota rápida..." value="${escapeHtml(g.notes || '')}" onchange="updateNote(${g.id}, this.value)">
+        <button class="btn-subtle-act" onclick="openEditModal(${g.id})">Editar</button>
+        <button class="btn-subtle-act" style="color:var(--red);" onclick="removeGuest(${g.id})">Borrar</button>
       </div>
     `;
 
@@ -1213,360 +1132,243 @@ function render() {
   });
 }
 
-function escapeHtml(text) {
-  if (!text) return '';
-  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+function escapeHtml(t) {
+  if (!t) return '';
+  return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function setGroup(group) {
-  currentGroup = group;
-  document.querySelectorAll('.group-tab-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-group') === group);
-  });
+function selectGroup(grp) {
+  currentGroup = grp;
+  document.querySelectorAll('.grp-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-grp') === grp));
   updateStats();
-  render();
+  renderCards();
 }
 
-function setStatusFilter(status) {
-  currentStatus = status;
-  document.querySelectorAll('.status-pill').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-status') === status);
-  });
-  render();
+function selectStatus(st) {
+  currentStatus = st;
+  document.querySelectorAll('.pill-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-st') === st));
+  renderCards();
 }
 
 function handleSearch() {
   searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
-  render();
+  renderCards();
 }
 
-function setGuestStatus(id, newStatus) {
+function setStatus(id, newStatus) {
   const g = guests.find(x => x.id === id);
   if (g) {
     g.status = newStatus;
-    saveData();
-    render();
-    const label = newStatus === 'confirmed' ? 'Confirmado' : (newStatus === 'declined' ? 'No asistirá' : 'Pendiente');
-    showToast(`${g.name} marcado como: ${label}`);
+    renderCards();
+    triggerSave(`Confirmación: ${g.name} (${newStatus})`);
+    const lbl = newStatus === 'confirmed' ? 'Confirmado' : (newStatus === 'declined' ? 'No asistirá' : 'Pendiente');
+    showToast(`${g.name}: ${lbl}`);
   }
 }
 
-function adjustPlazas(id, delta) {
+function stepPlazas(id, delta) {
   const g = guests.find(x => x.id === id);
   if (g) {
-    const current = parseInt(g.personas, 10) || 1;
-    const updated = Math.max(1, Math.min(30, current + delta));
-    if (updated !== current) {
-      g.personas = updated;
-      saveData();
-      render();
-      showToast(`Plazas de ${g.name} actualizadas a ${updated}`);
+    const cur = parseInt(g.personas, 10) || 1;
+    const n = Math.max(1, Math.min(20, cur + delta));
+    if (n !== cur) {
+      g.personas = n;
+      renderCards();
+      triggerSave(`Plazas de ${g.name} -> ${n}`);
     }
   }
 }
 
-function saveQuickNote(id, note) {
+function updateNote(id, note) {
   const g = guests.find(x => x.id === id);
   if (g) {
     g.notes = note.trim();
-    saveData();
+    triggerSave(`Nota en ${g.name}`);
     showToast('Nota guardada');
   }
 }
 
-// Photos Management with resize
-function changeGuestPhotoPrompt(id) {
-  targetPhotoGuestId = id;
-  document.getElementById('hiddenFileInput').click();
+// Photos: Compress on phone
+function pickPhotoFor(id) {
+  targetPhotoId = id;
+  document.getElementById('filePicker').click();
 }
-
-function triggerFileInput(source) {
-  document.getElementById('hiddenFileInput').click();
+function triggerPhotoPick(source) {
+  document.getElementById('filePicker').click();
 }
-
-function handleFileSelected(event) {
-  const file = event.target.files[0];
+function fileSelected(e) {
+  const file = e.target.files[0];
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function(evt) {
     const img = new Image();
     img.onload = function() {
-      // Resize to max 240x240 for mobile localStorage efficiency
       const canvas = document.createElement('canvas');
-      const maxDim = 240;
-      let width = img.width;
-      let height = img.height;
-      if (width > height) {
-        if (width > maxDim) {
-          height = Math.round(height * (maxDim / width));
-          width = maxDim;
-        }
-      } else {
-        if (height > maxDim) {
-          width = Math.round(width * (maxDim / height));
-          height = maxDim;
-        }
-      }
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, width, height);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      const maxD = 180;
+      let w = img.width, h = img.height;
+      if (w > h) { if (w > maxD) { h = Math.round(h * (maxD / w)); w = maxD; } }
+      else { if (h > maxD) { w = Math.round(w * (maxD / h)); h = maxD; } }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
 
-      if (document.getElementById('guestModal').classList.contains('open')) {
-        document.getElementById('inputPhotoData').value = dataUrl;
-        const preview = document.getElementById('formPhotoPreview');
-        preview.innerHTML = `<img src="${dataUrl}" alt="Preview">`;
-        document.getElementById('btnRemoveFormPhoto').style.display = 'inline-block';
-        showToast('Foto cargada en formulario');
-      } else if (targetPhotoGuestId) {
-        const g = guests.find(x => x.id === targetPhotoGuestId);
+      if (document.getElementById('editModal').classList.contains('open')) {
+        document.getElementById('mPhotoData').value = dataUrl;
+        document.getElementById('mPhotoPrev').innerHTML = `<img src="${dataUrl}" style="width:100%; height:100%; object-fit:cover;">`;
+        document.getElementById('btnDelPhoto').style.display = 'inline-block';
+      } else if (targetPhotoId) {
+        const g = guests.find(x => x.id === targetPhotoId);
         if (g) {
           g.photo = dataUrl;
-          saveData();
-          render();
-          showToast(`Foto de ${g.name} guardada`);
+          renderCards();
+          triggerSave(`Foto de ${g.name}`);
+          showToast(`Foto guardada para ${g.name}`);
         }
-        targetPhotoGuestId = null;
+        targetPhotoId = null;
       }
     };
-    img.src = e.target.result;
+    img.src = evt.target.result;
   };
   reader.readAsDataURL(file);
-  event.target.value = '';
+  e.target.value = '';
 }
-
-function removeGuestPhoto(id) {
-  const g = guests.find(x => x.id === id);
-  if (g && confirm(`¿Deseas quitar la foto de ${g.name}?`)) {
-    g.photo = '';
-    saveData();
-    render();
-    showToast('Foto removida');
-  }
-}
-
-function removeFormPhoto() {
-  document.getElementById('inputPhotoData').value = '';
-  document.getElementById('formPhotoPreview').innerHTML = '<span>📷</span>';
-  document.getElementById('btnRemoveFormPhoto').style.display = 'none';
+function delFormPhoto() {
+  document.getElementById('mPhotoData').value = '';
+  document.getElementById('mPhotoPrev').innerHTML = '📷';
+  document.getElementById('btnDelPhoto').style.display = 'none';
 }
 
 // Modals: Add / Edit
-function openAddGuestModal() {
+function openAddModal() {
   document.getElementById('modalTitle').textContent = 'Agregar Invitado';
   document.getElementById('editGuestId').value = '';
-  document.getElementById('inputName').value = '';
-  document.getElementById('inputPhone').value = '';
-  document.getElementById('inputPersonas').value = '1';
-  document.getElementById('inputGroup').value = currentGroup === 'linus' ? 'linus' : 'ziara';
-  document.getElementById('inputRelation').value = 'Familia';
-  document.getElementById('inputStatus').value = 'pending';
-  document.getElementById('inputNotes').value = '';
-  removeFormPhoto();
-
-  document.getElementById('guestModal').classList.add('open');
+  document.getElementById('mName').value = '';
+  document.getElementById('mPhone').value = '';
+  document.getElementById('mPersonas').value = '1';
+  document.getElementById('mGroup').value = currentGroup === 'linus' ? 'linus' : 'ziara';
+  document.getElementById('mRelation').value = 'Familia';
+  document.getElementById('mNotes').value = '';
+  delFormPhoto();
+  document.getElementById('editModal').classList.add('open');
 }
 
-function openEditGuestModal(id) {
+function openEditModal(id) {
   const g = guests.find(x => x.id === id);
   if (!g) return;
-
   document.getElementById('modalTitle').textContent = 'Modificar Invitado';
   document.getElementById('editGuestId').value = g.id;
-  document.getElementById('inputName').value = g.name || '';
-  document.getElementById('inputPhone').value = g.phone || '';
-  document.getElementById('inputPersonas').value = g.personas || 1;
-  document.getElementById('inputGroup').value = g.group || 'ziara';
-  document.getElementById('inputRelation').value = g.relation || '';
-  document.getElementById('inputStatus').value = g.status || 'pending';
-  document.getElementById('inputNotes').value = g.notes || '';
+  document.getElementById('mName').value = g.name || '';
+  document.getElementById('mPhone').value = g.phone || '';
+  document.getElementById('mPersonas').value = g.personas || 1;
+  document.getElementById('mGroup').value = g.group || 'ziara';
+  document.getElementById('mRelation').value = g.relation || '';
+  document.getElementById('mNotes').value = g.notes || '';
 
   if (g.photo) {
-    document.getElementById('inputPhotoData').value = g.photo;
-    document.getElementById('formPhotoPreview').innerHTML = `<img src="${g.photo}" alt="Preview">`;
-    document.getElementById('btnRemoveFormPhoto').style.display = 'inline-block';
+    document.getElementById('mPhotoData').value = g.photo;
+    document.getElementById('mPhotoPrev').innerHTML = `<img src="${g.photo}" style="width:100%; height:100%; object-fit:cover;">`;
+    document.getElementById('btnDelPhoto').style.display = 'inline-block';
   } else {
-    removeFormPhoto();
+    delFormPhoto();
   }
-
-  document.getElementById('guestModal').classList.add('open');
+  document.getElementById('editModal').classList.add('open');
 }
 
-function handleSaveGuest(event) {
-  event.preventDefault();
+function saveGuestForm(e) {
+  e.preventDefault();
   const idStr = document.getElementById('editGuestId').value;
-  const name = document.getElementById('inputName').value.trim();
-  const phone = document.getElementById('inputPhone').value.trim();
-  const personas = parseInt(document.getElementById('inputPersonas').value, 10) || 1;
-  const group = document.getElementById('inputGroup').value;
-  const relation = document.getElementById('inputRelation').value.trim();
-  const status = document.getElementById('inputStatus').value;
-  const notes = document.getElementById('inputNotes').value.trim();
-  const photo = document.getElementById('inputPhotoData').value;
+  const name = document.getElementById('mName').value.trim();
+  const phone = document.getElementById('mPhone').value.trim();
+  const personas = parseInt(document.getElementById('mPersonas').value, 10) || 1;
+  const group = document.getElementById('mGroup').value;
+  const relation = document.getElementById('mRelation').value.trim();
+  const notes = document.getElementById('mNotes').value.trim();
+  const photo = document.getElementById('mPhotoData').value;
 
-  const cleanPhone = phone.replace(/\D/g, '');
+  const clean = phone.replace(/\D/g, '');
   let wa = '';
-  if (cleanPhone.startsWith('809') || cleanPhone.startsWith('829') || cleanPhone.startsWith('849')) {
-    wa = '1' + cleanPhone;
-  } else if (cleanPhone) {
-    wa = cleanPhone;
-  }
+  if (clean.startsWith('809') || clean.startsWith('829') || clean.startsWith('849')) wa = '1' + clean;
+  else if (clean) wa = clean;
 
   if (idStr) {
-    // Modify existing
-    const id = parseInt(idStr, 10);
-    const g = guests.find(x => x.id === id);
+    const g = guests.find(x => x.id === parseInt(idStr, 10));
     if (g) {
-      g.name = name;
-      g.phone = phone;
-      g.wa = wa;
-      g.personas = personas;
-      g.group = group;
-      g.relation = relation;
-      g.status = status;
-      g.notes = notes;
-      g.photo = photo;
-      showToast('Invitado modificado con éxito');
+      g.name = name; g.phone = phone; g.wa = wa; g.personas = personas;
+      g.group = group; g.relation = relation; g.notes = notes; g.photo = photo;
+      triggerSave(`Modificado: ${name}`);
+      showToast('Invitado modificado');
     }
   } else {
-    // Add new
     const nextId = guests.length > 0 ? Math.max(...guests.map(x => x.id)) + 1 : 1;
-    guests.push({
-      id: nextId,
-      list_num: String(nextId),
-      name,
-      greeting: name.split(' ')[0],
-      phone,
-      wa,
-      personas,
-      group,
-      relation,
-      status,
-      notes,
-      photo
+    guests.unshift({
+      id: nextId, list_num: String(nextId), name, greeting: name.split(' ')[0],
+      phone, wa, personas, group, relation, status: 'pending', notes, photo
     });
+    triggerSave(`Agregado: ${name}`);
     showToast('Nuevo invitado agregado');
   }
 
-  saveData();
-  render();
-  closeModal('guestModal');
+  renderCards();
+  closeModal('editModal');
 }
 
-function deleteGuest(id) {
+function removeGuest(id) {
   const g = guests.find(x => x.id === id);
-  if (!g) return;
-  if (confirm(`¿Estás seguro de que deseas remover a "${g.name}" de la lista?`)) {
+  if (g && confirm(`¿Remover a "${g.name}" de la lista?`)) {
     guests = guests.filter(x => x.id !== id);
-    saveData();
-    render();
+    renderCards();
+    triggerSave(`Removido: ${g.name}`);
     showToast(`"${g.name}" fue removido`);
   }
+}
+
+// Git Settings Modal
+function openGitSettingsModal() {
+  document.getElementById('gitTokenInput').value = gitToken;
+  document.getElementById('gitModal').classList.add('open');
+}
+
+function saveGitToken() {
+  const tok = document.getElementById('gitTokenInput').value.trim();
+  if (!tok) {
+    alert('Por favor ingresa un token válido.');
+    return;
+  }
+  gitToken = tok;
+  localStorage.setItem(TOKEN_STORAGE_KEY, gitToken);
+  updateGitBadgeUI();
+  closeModal('gitModal');
+  showToast('Token conectado. Guardando en Git...');
+  pushToGit('Conexión inicial de Git');
+}
+
+function copyZiaraLink() {
+  const shareUrl = `${window.location.origin}${window.location.pathname}#auth=${encodeURIComponent(gitToken)}`;
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    showToast('Enlace para Ziara copiado al portapapeles');
+    alert('¡Enlace copiado!\n\nPégalo en WhatsApp y envíaselo a Ziara. Al tocarlo en su celular, su teléfono se sincronizará automáticamente.');
+  });
 }
 
 function closeModal(id) {
   document.getElementById(id).classList.remove('open');
 }
-
-function closeModalOnOverlay(e, id) {
-  if (e.target === document.getElementById(id)) {
-    closeModal(id);
-  }
-}
-
-// Export CSV
-function exportCSV() {
-  const list = guests.filter(g => currentGroup === 'all' || g.group === currentGroup);
-  const headers = ['ID', 'Lista', 'Nombre', 'Relacion', 'Telefono', 'Plazas', 'Estado_Asistencia', 'Notas'];
-  const rows = list.map(g => [
-    g.list_num || g.id,
-    g.group === 'ziara' ? 'Ziara' : 'Linus',
-    `"${g.name.replace(/"/g, '""')}"`,
-    `"${(g.relation || '').replace(/"/g, '""')}"`,
-    `"${g.phone || ''}"`,
-    g.personas || 1,
-    g.status === 'confirmed' ? 'Confirmado' : (g.status === 'declined' ? 'No asistira' : 'Pendiente'),
-    `"${(g.notes || '').replace(/"/g, '""')}"`
-  ]);
-
-  const csv = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'asistencia_boda_linus_ziara.csv';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-  showToast('Archivo CSV descargado');
-}
-
-// Backup & Sync
-function shareOrSyncModal() {
-  document.getElementById('backupDataArea').value = JSON.stringify(guests);
-  document.getElementById('importDataArea').value = '';
-  document.getElementById('syncModal').classList.add('open');
-}
-
-function copyBackupData() {
-  const text = document.getElementById('backupDataArea').value;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast('Código de respaldo copiado para enviar por WhatsApp');
-  });
-}
-
-function handleImportData() {
-  const text = document.getElementById('importDataArea').value.trim();
-  if (!text) {
-    alert('Por favor pega el código recibido.');
-    return;
-  }
-  try {
-    const parsed = JSON.parse(text);
-    if (Array.isArray(parsed) && parsed.length > 0) {
-      if (confirm('Se actualizarán los datos de tu celular con el código recibido. ¿Continuar?')) {
-        guests = parsed;
-        saveData();
-        render();
-        closeModal('syncModal');
-        showToast('¡Datos sincronizados con éxito en este celular!');
-      }
-    } else {
-      alert('El formato del código no es válido.');
-    }
-  } catch(e) {
-    alert('Error al leer el código. Asegúrate de copiarlo completo.');
-  }
-}
-
-function resetToInitialData() {
-  if (confirm('¿Seguro que deseas reiniciar la lista a los valores iniciales?')) {
-    localStorage.removeItem(STORAGE_KEY);
-    loadData();
-    updateStats();
-    render();
-    showToast('Lista restaurada a los valores iniciales');
-  }
+function closeOverlay(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
 }
 
 let toastTimer = null;
 function showToast(msg) {
-  const el = document.getElementById('toast');
+  const el = document.getElementById('toastMsg');
   el.textContent = msg;
   el.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => {
-    el.classList.remove('show');
-  }, 2500);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
 }
 
-// Initialize
-loadData();
-updateStats();
-render();
+// Start
+initApp();
 </script>
 
 </body>
